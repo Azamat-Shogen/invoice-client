@@ -10,14 +10,10 @@ const NavBar = () => {
     };
   };
 
-//   $(document).on('click','.navbar-collapse.show',function(e) {
-//         $(this).collapse('hide');
-//     });
-
 
     return (
         <nav className="navbar navbar-expand-lg  navbar-dark bg-dark nav-div">
-            <h3><a href="/user" className="az">Profile</a> </h3>
+            <h3><NavLink to="/user" className="nav-link">Profile</NavLink> </h3>
                 <button className="navbar-toggler"
                         type="button" data-toggle="collapse" data-target="#navbarNav"
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
