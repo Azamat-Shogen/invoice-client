@@ -1,17 +1,17 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/navbar/Navbar';
-import Home from './components/pages/Home';
-import Invoice from './components/pages/Invoice';
-import Login from './components/pages/Login';
-import Profile from './components/pages/Profile';
-import Register from './components/pages/Register';
+import Home from './components/pages/home/Home';
+import Invoice from './components/pages/invoice/Invoice';
+import Login from './components/pages/login/Login';
+import Profile from './components/pages/profile/Profile';
+import Register from './components/pages/register/Register';
 
 function App() {
 
   
   return (
-    <div className="App"> 
+    <div className="app"> 
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
