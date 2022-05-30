@@ -1,21 +1,36 @@
+import { useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import HomeIcon from '@material-ui/icons/Home';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import Badge from "@material-ui/core/Badge";
 import { useAuth } from "../auth/auth";
 import './_navbar.scss'
+import CartDrawer from "./CartDrawer";
+import Button from '@material-ui/core/Button';
+
 
 
 const NavBar = () => {
+    const [anchorEl, setAnchorEl] = useState(null);
+
 
     const auth = useAuth();
     const navigate = useNavigate();
+
 
     const handleLogout = () => {
         auth.logout();
         navigate('/')
     }
 
-    console.log(auth)
+    const handleCartClick = (event) => {
+        setAnchorEl(event.currentTarget);
+      };
+    
+      const handleCartClose = () => {
+        setAnchorEl(null);
+      };
+
 
     return (
         <nav className="navbar navbar-expand-lg  navbar-dark bg-dark sticky-top header">
@@ -67,9 +82,17 @@ const NavBar = () => {
 
                          {auth.user && (
                             <li className="nav-item">
-                                <NavLink  className="nav-link" to="/invoice">
-                                    <AddShoppingCartIcon /> 
-                                </NavLink>
+                                <Button  className="nav-link cart-btn" 
+                                         aria-controls="customized-menu"
+                                         aria-haspopup="true"
+                                         onClick={handleCartClick}>
+
+                                <Badge badgeContent={auth.itemCount} color="error" 
+                                     overlap="rectangular" showZero>
+                                     <AddShoppingCartIcon /> 
+                                </Badge>
+                                </Button>
+                                <CartDrawer anchorEl={anchorEl} open={Boolean(anchorEl)} onclose={handleCartClose} />
                             </li>
                          )}   
                            

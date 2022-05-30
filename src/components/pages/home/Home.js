@@ -2,6 +2,7 @@ import { useState } from "react";
 import "react-svg-map/lib/index.css";
 import { CheckboxSVGMap, SVGMap } from "react-svg-map";
 import { usaMap } from "./map";
+import { useAuth } from "./../../auth/auth";
 import './_home.scss'
 
 
@@ -11,7 +12,11 @@ const Home = () => {
 
     const [currentState, setCurrentState] = useState("...");
     const [cart, setCart] = useState([])
+
+    const user = useAuth();
    
+
+
     
 
     const handleMapClick = locations => {
@@ -24,7 +29,7 @@ const Home = () => {
             return loc
         })
          setCart(newCart)
-
+         user.calculate(newCart.length)
   
     }
 

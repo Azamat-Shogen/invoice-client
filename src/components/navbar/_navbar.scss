@@ -44,3 +44,12 @@
     }
 
 }
+
+.cart-btn {
+    transition: 0.3s ease-in!important;
+    outline: none!important;
+    &:hover{
+        box-shadow: 4px 4px 4px rgba(226, 226, 232, 0.33);
+        transform: scale(1.3);
+    }
+}
