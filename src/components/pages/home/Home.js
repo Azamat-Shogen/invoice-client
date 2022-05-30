@@ -11,26 +11,20 @@ import './_home.scss'
 const Home = () => {
 
     const [currentState, setCurrentState] = useState("...");
-    const [cart, setCart] = useState([])
-
     const user = useAuth();
-   
 
-
-    
 
     const handleMapClick = locations => {
         const cartIds = locations.map(loc => { return { id: loc.id, }})
         const newCart = [];
         usaMap.locations.map(loc => {
             if(cartIds.find(el => el.id === loc.id)){
-                newCart.push({name: loc.name, id: loc.id, cost: loc.cost, convenienceFee: loc.convenienceFee})
+                newCart.push({name: loc.name, id: loc.id, count: 1, cost: loc.cost, convenienceFee: loc.convenienceFee})
             }
             return loc
         })
-         setCart(newCart)
-         user.calculate(newCart.length)
-  
+         user.calculate(newCart.length);
+         user.updateCart(newCart);
     }
 
     return (
@@ -43,11 +37,7 @@ const Home = () => {
               onLocationMouseOut={() => {setCurrentState('...')}}  
               onChange={handleMapClick}
              />
-
-            
-          
             </div>
-           
         </div>
     )
 };
