@@ -23,25 +23,27 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     }
 
-    const calculate = (operand) => {
-        if(itemCount === 0 && operand === '-'){
+    const calculate = (inputValue) => {
+        if(itemCount === 0 && inputValue === '-'){
             setItemCount(0)
             return;
         }
-        if(operand === '-'){
+        if(inputValue === '-'){
             setItemCount(itemCount - 1);
             return
         }
-        if(operand === '+'){
+        if(inputValue === '+'){
             setItemCount(itemCount + 1);
             return
         }
-        if(operand === '0'){
+        
+        if(inputValue === '0'){
             setItemCount(0);
             return;
         }
         else {
-            return;
+            setItemCount(inputValue)
+            
         }
     }
 

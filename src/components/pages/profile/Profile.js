@@ -2,6 +2,7 @@ import { useState } from "react";
 import './_profile.scss'
 import avatar from './profile1.jpg'
 import EditUserModal from "./EditUserModal";
+import { useAuth } from "../../auth/auth";
 
 const initialProfile = {
     name: 'John Doe',
@@ -12,8 +13,8 @@ const initialProfile = {
 
 const Profile = () => {
 
-
- 
+    const user = useAuth();
+    
 
   
     return (
@@ -97,7 +98,14 @@ const Profile = () => {
                     
                 </ul>
                 <div className="card-body">
+                    {user.company ? (
                     <button type="submit" className="btn btn-primary">Update</button>
+
+                    ) : (
+                        <button type="submit" className="btn btn-primary">Add</button>
+                    )}
+                   
+
                 </div>
                 </form>
                 </div>
