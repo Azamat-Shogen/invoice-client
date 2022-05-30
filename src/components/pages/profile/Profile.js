@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './_profile.scss'
 import avatar from './profile1.jpg'
 import EditUserModal from "./EditUserModal";
@@ -15,6 +15,10 @@ const Profile = () => {
 
     const user = useAuth();
     
+    useEffect(() => {
+        user.calculate(0)
+        user.updateCart([])
+    }, [])
 
   
     return (

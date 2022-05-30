@@ -92,7 +92,11 @@ const NavBar = () => {
                                      <AddShoppingCartIcon /> 
                                 </Badge>
                                 </Button>
-                                <CartDrawer anchorEl={anchorEl} open={Boolean(anchorEl)} onclose={handleCartClose} />
+                                <CartDrawer anchorEl={anchorEl}
+                                            open={Boolean(anchorEl)}
+                                            onclose={handleCartClose}
+                                            items={auth.cart}
+                                />
                             </li>
                          )}   
                            
