@@ -1,103 +1,34 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Button from '@material-ui/core/Button';
-import { NavLink, useNavigate, Link } from "react-router-dom";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import { useAuth } from "../auth/auth";
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
+import { useStyles, StyledMenu, StyledTableCell, StyledTableRow } from "./drawerStyles";
 
 
-
-
-
-
-const StyledMenu = withStyles({
-  paper: {
-    border: '1px solid #d3d4d5',
-  },
-})((props) => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'center',
-    }}
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    {...props}
-  />
-));
-
-
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
-function createData(state, stateFee, convFee, cost, count=1, edit="") {
-  return { state, stateFee, convFee, cost, count, edit };
-}
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 600,
-  },
-  menu: {
-    "& .MuiPaper-root": {
-      backgroundColor: "lightblue",
-    },
-    "& .MuiList-padding": {
-      padding: 0,
-      
-
-    },
-    "& .MuiMenu-paper": {
-      marginTop: "20px",
-    }
-  },
-
-  footerCell: {
-    "& .MuiTableCell-root": {
-      color: 'blue',
-      fontWeight: 500
-    }
-  },
-});
 
 
 const CartDrawer = ({anchorEl, open, onclose , items}) => {
+    const user = useAuth();
+    console.log(user)
 
     console.log(items)
     const classes = useStyles();
-    const navigate = useNavigate();
 
-    const toInvoicePage = () => {
-      navigate('/invoice')
+    const handleAddIcon = (itemId) => {
+        user.increaseStateCount(itemId)
+    }
+
+    const handleRemoveIcon = (itemId) => {
+      user.deleteFromCart(itemId)
     }
 
     return (
@@ -118,7 +49,9 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                 <StyledTableCell align="right">Conv. fee</StyledTableCell>
                 <StyledTableCell align="right">Cost</StyledTableCell>
                 <StyledTableCell align="right">Count</StyledTableCell>
-                <StyledTableCell align="right">...</StyledTableCell>
+                <StyledTableCell align="right">
+                  <MoreVertIcon />
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -131,7 +64,17 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   <StyledTableCell align="center">${item.convenienceFee}</StyledTableCell>
                   <StyledTableCell align="center">${item.cost + item.convenienceFee}</StyledTableCell>
                   <StyledTableCell align="center">{item.count}</StyledTableCell>
-                  <StyledTableCell align="center">{'+ -'}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <div>
+                      <RemoveIcon className={classes.icondRemoveStyle}
+                        onClick={() => handleRemoveIcon(item.id)}
+                      />
+                      <AddIcon color="action" 
+                            className={classes.icondAddStyle} 
+                              onClick={() => handleAddIcon(item.id)}
+                            />
+                    </div>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
@@ -139,7 +82,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                <StyledTableRow >
                <StyledTableCell align="left">Service Fee: $25</StyledTableCell>
                <StyledTableCell align="center">{''}</StyledTableCell>
-               <StyledTableCell color="secondary" align="center">Total (cost x service fee):</StyledTableCell>
+               <StyledTableCell color="secondary" align="center">Total (cost + service fee * count):</StyledTableCell>
                <StyledTableCell align="center">{'$45.00'}</StyledTableCell>
                <StyledTableCell align="right">
                   <Button variant="contained" 
@@ -151,7 +94,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                           Invoice</Button>
                </StyledTableCell>
 
-               <StyledTableCell align="center">{''}</StyledTableCell>
+               <StyledTableCell align="center">{''} </StyledTableCell>
                </StyledTableRow>
             </TableFooter>
           </Table>
