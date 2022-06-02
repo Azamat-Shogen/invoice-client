@@ -18,9 +18,7 @@ import { useStyles, StyledMenu, StyledTableCell, StyledTableRow } from "./drawer
 
 const CartDrawer = ({anchorEl, open, onclose , items}) => {
     const user = useAuth();
-    console.log(user)
-
-    console.log(items)
+   
     const classes = useStyles();
 
     const handleAddIcon = (itemId) => {
@@ -46,7 +44,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
               <TableRow>
                 <StyledTableCell>State</StyledTableCell>
                 <StyledTableCell align="right">State fee</StyledTableCell>
-                <StyledTableCell align="right">Conv. fee</StyledTableCell>
+                <StyledTableCell align="center">Conv. fee</StyledTableCell>
                 <StyledTableCell align="right">Cost</StyledTableCell>
                 <StyledTableCell align="right">Count</StyledTableCell>
                 <StyledTableCell align="right">
@@ -60,10 +58,10 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   <StyledTableCell component="th" scope="row">
                      {item.name}
                   </StyledTableCell>
-                  <StyledTableCell align="center">${item.cost}</StyledTableCell>
+                  <StyledTableCell align="center">${item.stateFee}</StyledTableCell>
                   <StyledTableCell align="center">${item.convenienceFee}</StyledTableCell>
-                  <StyledTableCell align="center">${item.cost + item.convenienceFee}</StyledTableCell>
-                  <StyledTableCell align="center">{item.count}</StyledTableCell>
+                  <StyledTableCell align="center">${item.stateFee + item.convenienceFee}</StyledTableCell>
+                  <StyledTableCell align="right">{item.count}</StyledTableCell>
                   <StyledTableCell align="center">
                     <div>
                       <RemoveIcon className={classes.icondRemoveStyle}
