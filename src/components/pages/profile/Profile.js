@@ -16,8 +16,8 @@ const Profile = () => {
     const user = useAuth();
     
     useEffect(() => {
-        user.calculate(0)
-        user.updateCart([])
+        // user.calculate(0)
+        // user.updateCart([])
     }, [])
 
   

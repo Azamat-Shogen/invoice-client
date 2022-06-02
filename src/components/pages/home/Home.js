@@ -1,11 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-svg-map/lib/index.css";
-import { CheckboxSVGMap, SVGMap } from "react-svg-map";
-import { usaMap } from "./map";
 import { useAuth } from "./../../auth/auth";
 import './_home.scss'
-
-
+import Path from "./Path";
 
 
 const Home = () => {
@@ -14,29 +11,33 @@ const Home = () => {
     const user = useAuth();
 
 
-    const handleMapClick = locations => {
-        const cartIds = locations.map(loc => { return { id: loc.id, }})
-        const newCart = [];
-        usaMap.locations.map(loc => {
-            if(cartIds.find(el => el.id === loc.id)){
-                newCart.push({name: loc.name, id: loc.id, count: 1, cost: loc.cost, convenienceFee: loc.convenienceFee})
-            }
-            return loc
-        })
-         user.calculate(newCart.length);
-         user.updateCart(newCart);
+    console.log(user)
+
+    const handleMouseOver = (e) => {
+        setCurrentState(e.target.id.toUpperCase());
+        
     }
+
+    const handleMouseLeave = (e) => {
+        setCurrentState("...");
+    }
+
+    
 
     return (
         <div className="home">
         <h6>Home Page. I know what you did last summer</h6>
         <div className="state-abbreviation"><h4>{currentState}</h4></div>
             <div className="map-container">
-             <CheckboxSVGMap  map={usaMap}
-              onLocationMouseOver={(loc) => {setCurrentState(loc.target.id.toUpperCase())}}
-              onLocationMouseOut={() => {setCurrentState('...')}}  
-              onChange={handleMapClick}
-             />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="192 9 1028 746" className="svg-map" aria-label="Map of USA">
+                {user.usaMap.locations.map( loc => (
+                    <Path key={loc.id} location={loc} 
+                    handleMouseOver={handleMouseOver}
+                    handleMouseLeave={handleMouseLeave}
+                    handleMapClick={user.handleMapClick}
+                     />
+                ))}
+                </svg>
             </div>
         </div>
     )

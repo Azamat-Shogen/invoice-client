@@ -1,4 +1,5 @@
 import { createContext, useState, useContext } from "react";
+import { MAP } from './map'
 
 const AuthContext = createContext(null)
 
@@ -11,9 +12,12 @@ const defaultUser = {
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(defaultUser);
-    // const [user, setUser] = useState(null);
     const [cart, setCart] = useState([])
-    const [itemCount, setItemCount] = useState(0)
+    const [itemCount, setItemCount] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [serviceFee, setServiceFee] = useState(25);
+    const [usaMap, setMap] = useState(MAP);
+    
 
     const login = (user) => {
         setUser(user)
@@ -27,23 +31,69 @@ export const AuthProvider = ({ children }) => {
         setCart([...cart, item])
     }
 
-    const deleteFromCart = (itemId) => {
-        let count = 0;
-        let filteredArr = cart.filter( el => {
-            if(count === 1) return cart;
-            if(el.id === itemId){
-                count++;
-            }
-            return el.id !== itemId;
+    
+    //TODO: togle map path checked to apply the styles
+    function toggleChecked(stateId){
+        const updatedLocations = usaMap.locations.map(loc => {
+            if(loc.id === stateId){ return {...loc, checked: !loc.checked}}
+            return loc;
         });
-        setCart(filteredArr)
+        setMap({...usaMap, locations: updatedLocations})
     }
 
-    const updateCart = (newCartList) => {
+       
+    const handleMapClick = (stateId) => {
+
+        toggleChecked(stateId)
+        const item = usaMap.locations.find(el => el.id === stateId);
+        const existsInCartItem = cart.find(el => el.id === item.id);
+        let newCart;
+
+        //TODO: if item not in the cart, add to cart
+        if(!existsInCartItem){
+                newCart = [...cart, item];
+            setCart(newCart);
+            calculate(newCart.length);
+            } 
+
+        //TODO: filter cart, if item already in cart, remove it
+            else {
+                newCart = cart.filter(el => el.id !== item.id);     
+        }
+        setCart(newCart);
+        calculate(newCart.length);
+    }
+     
+
+    const deleteFromCart = (itemId) => {  
+        const element = cart.find(el => el.id === itemId);
+        if(!element) return;
+        if(element.count > 1){
+            const mapped = cart.map(el => {
+                if(el.id === itemId){ return {...el, count: el.count - 1}}
+                return el; });
+                setCart(mapped)
+        } else {
+            const filtered = cart.filter(el => el.id !== itemId);
+            calculate('-');
+            updateCart(filtered);
+            toggleChecked(itemId)
+        }
+    }
+
+    const increaseStateCount = (itemId) => {
+        const newState = cart.map( el => {
+            if(el.id === itemId){ return {...el, count: el.count + 1}}
+            return el;
+        });
+        setCart(newState)
+    }
+
+    function updateCart (newCartList){
         setCart(newCartList)
     }
 
-    const calculate = (inputValue) => {
+    function calculate (inputValue) {
         if(itemCount === 0 && inputValue === '-'){
             setItemCount(0)
             return;
@@ -68,8 +118,9 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, updateCart,
-            itemCount, calculate, cart, addToCart, deleteFromCart}}>
+        <AuthContext.Provider value={{ user, login, logout, updateCart, handleMapClick,
+            itemCount, calculate, cart, addToCart, usaMap,
+            deleteFromCart, increaseStateCount }}>
             {children}
         </AuthContext.Provider>
     )
@@ -78,3 +129,4 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
     return useContext(AuthContext);
 }
+
