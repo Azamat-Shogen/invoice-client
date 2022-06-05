@@ -6,7 +6,8 @@ const AuthContext = createContext(null)
 
 const defaultUser = {
     name: "john",
-    email: 'john@gmail.com'
+    email: 'john@gmail.com',
+    status: 'active'
 }
 
 
@@ -14,8 +15,9 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(defaultUser);
     const [cart, setCart] = useState([])
     const [itemCount, setItemCount] = useState(0);
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState(0.0);
     const [serviceFee, setServiceFee] = useState(25);
+    const [grandTotal, setGrandTotal] = useState(0, 0)
     const [usaMap, setMap] = useState(MAP);
     
 
@@ -41,6 +43,23 @@ export const AuthProvider = ({ children }) => {
         setMap({...usaMap, locations: updatedLocations})
     }
 
+    
+    //TODO: update total and grandTotal values
+    const calculateTotals = (arr) => {
+         
+         const defaultTotal = 0.0
+         const tempTotal = arr.length > 0 ? arr.map(el => el.cost)
+                         .reduce((a, b) => parseFloat(a) + parseFloat(b)) : defaultTotal;
+ 
+         setTotal(parseFloat(tempTotal).toFixed(2))
+ 
+         const totalCount = arr.length > 0 ? arr.map(el => el.count)
+                          .reduce((a, b) => parseInt(a) + parseInt(b)) : 0;
+ 
+         const d = (parseFloat(totalCount) * serviceFee + parseFloat(tempTotal)).toFixed(2)              
+         setGrandTotal(d);
+    }
+
        
     const handleMapClick = (stateId) => {
 
@@ -51,9 +70,7 @@ export const AuthProvider = ({ children }) => {
 
         //TODO: if item not in the cart, add to cart
         if(!existsInCartItem){
-                newCart = [...cart, item];
-            setCart(newCart);
-            calculate(newCart.length);
+                newCart = [...cart, {...item, cost: item.cost.toFixed(2)}];
             } 
 
         //TODO: filter cart, if item already in cart, remove it
@@ -62,6 +79,8 @@ export const AuthProvider = ({ children }) => {
         }
         setCart(newCart);
         calculate(newCart.length);
+        calculateTotals(newCart)
+       
     }
      
 
@@ -70,23 +89,34 @@ export const AuthProvider = ({ children }) => {
         if(!element) return;
         if(element.count > 1){
             const mapped = cart.map(el => {
-                if(el.id === itemId){ return {...el, count: el.count - 1}}
+                if(el.id === itemId){ 
+                    const newElement = {...el, count: el.count - 1}
+                    newElement.cost -= newElement.stateFee + newElement.convenienceFee;
+                    return {...newElement, cost: newElement.cost.toFixed(2)}
+                }
                 return el; });
                 setCart(mapped)
+                calculateTotals(mapped)
         } else {
             const filtered = cart.filter(el => el.id !== itemId);
             calculate('-');
             updateCart(filtered);
+            calculateTotals(filtered)
             toggleChecked(itemId)
         }
     }
 
     const increaseStateCount = (itemId) => {
-        const newState = cart.map( el => {
-            if(el.id === itemId){ return {...el, count: el.count + 1}}
+        const newCart = cart.map( el => {
+            if(el.id === itemId){
+                const newElement = {...el, count: el.count + 1 }
+                newElement.cost = newElement.stateFee * newElement.count + newElement.convenienceFee * newElement.count;
+                return {...newElement, cost: newElement.cost.toFixed(2)}
+                }
             return el;
         });
-        setCart(newState)
+        setCart(newCart)
+        calculateTotals(newCart)
     }
 
     function updateCart (newCartList){
@@ -119,7 +149,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, login, logout, updateCart, handleMapClick,
-            itemCount, calculate, cart, addToCart, usaMap,
+            itemCount, calculate, cart, addToCart, usaMap, total, grandTotal, serviceFee,
             deleteFromCart, increaseStateCount }}>
             {children}
         </AuthContext.Provider>

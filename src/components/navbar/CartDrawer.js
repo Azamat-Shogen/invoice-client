@@ -21,6 +21,8 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
    
     const classes = useStyles();
 
+    const itemCounts = items.length > 0 ? items.map( el => el.count).reduce((a, b) => parseInt(a) + parseInt(b)) : 0
+
     const handleAddIcon = (itemId) => {
         user.increaseStateCount(itemId)
     }
@@ -60,7 +62,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   </StyledTableCell>
                   <StyledTableCell align="center">${item.stateFee}</StyledTableCell>
                   <StyledTableCell align="center">${item.convenienceFee}</StyledTableCell>
-                  <StyledTableCell align="center">${item.stateFee + item.convenienceFee}</StyledTableCell>
+                  <StyledTableCell align="right">${item.cost}</StyledTableCell>
                   <StyledTableCell align="right">{item.count}</StyledTableCell>
                   <StyledTableCell align="center">
                     <div>
@@ -78,10 +80,11 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
             </TableBody>
             <TableFooter className={classes.footerCell}>
                <StyledTableRow >
-               <StyledTableCell align="left">Service Fee: $25</StyledTableCell>
+               <StyledTableCell align="left">Service Fee: ${user.serviceFee} x {itemCounts}</StyledTableCell>
                <StyledTableCell align="center">{''}</StyledTableCell>
-               <StyledTableCell color="secondary" align="center">Total (cost + service fee * count):</StyledTableCell>
-               <StyledTableCell align="center">{'$45.00'}</StyledTableCell>
+               <StyledTableCell color="secondary" align="center">Total: {user.total}</StyledTableCell>
+               <StyledTableCell align="center">Grand total: {user.grandTotal}</StyledTableCell>
+               <StyledTableCell align="center">{''} </StyledTableCell>
                <StyledTableCell align="right">
                   <Button variant="contained" 
                           style={{color: 'white'}}  
@@ -92,7 +95,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                           Invoice</Button>
                </StyledTableCell>
 
-               <StyledTableCell align="center">{''} </StyledTableCell>
+               {/* <StyledTableCell align="center">{''} </StyledTableCell> */}
                </StyledTableRow>
             </TableFooter>
           </Table>
