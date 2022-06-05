@@ -11,7 +11,9 @@ const filteredMap = {...USA, locations: filteredStates}
 const mappedLocations = filteredMap.locations.map( loc => {
     const state = states.find(el => el.id === loc.id);
     if(state) {
-    return { ...loc, stateFee: state.stateFee, convenienceFee: state.convenienceFee, checked: false, count: 1}
+        const count = 1;
+        const cost = state.stateFee * count + state.convenienceFee * count;
+        return { ...loc, stateFee: state.stateFee, convenienceFee: state.convenienceFee, checked: false, count, cost }
 
      }
      else { 
