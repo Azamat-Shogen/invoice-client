@@ -13,12 +13,16 @@ const initialProfile = {
 
 const Profile = () => {
 
-    const user = useAuth();
+    const auth = useAuth();
     
     useEffect(() => {
-        // user.calculate(0)
-        // user.updateCart([])
+       
     }, [])
+
+    const statusBGColor = auth.user.status === 'active' ? 'bg-success' : 
+                       (auth.user.status === 'pending' ? 'bg-warning' : 'bg-danger')
+    const statusTextColor = auth.user.status === 'active' ? 'white' : 
+                        (auth.user.status === 'pending' ? 'blue' : 'black')
 
   
     return (
@@ -29,20 +33,28 @@ const Profile = () => {
             <div className="col-sm-6">
                 <div className="card user">
                 <img className="card-img-top avatar" src={avatar} alt="Card cap" />
-                <div className="card-body ">
-                    <h5 className="card-title bold">Use Profile</h5>
+                <div className="card-body d-flex justify-content-between">
+                    <div className="bg-info flex-fill rounded-left">
+                        <h5 className="card-title bold white ml-1 pt-2">Profile</h5>
+                    </div>
+                   <div className={`flex-fill rounded-right ${statusBGColor}`}>
+
+                     {/* <h6 className="center pt-2 {}">{auth.user.status}</h6> */}
+                     <h6 className={`center pt-2 ${statusTextColor}`}>{auth.user.status}</h6>
+
+                   </div>
                 </div>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         <div className="flex">
-                            <h6 className="w-40">Username</h6>
-                            <h6 className="w-50">{initialProfile.name}</h6>
+                            <p className="w-40">Username</p>
+                            <p className="w-50">{initialProfile.name}</p>
                         </div>
                     </li>
                     <li className="list-group-item">
                         <div className="flex">
-                            <h6 className="w-40">Email</h6>
-                            <h6 className="w-50">{initialProfile.email}</h6>
+                            <p className="w-40">Email</p>
+                            <p className="w-50">{initialProfile.email}</p>
                         </div>
                     </li>
                     
@@ -102,7 +114,7 @@ const Profile = () => {
                     
                 </ul>
                 <div className="card-body">
-                    {user.company ? (
+                    {auth.user.company ? (
                     <button type="submit" className="btn btn-primary">Update</button>
 
                     ) : (
