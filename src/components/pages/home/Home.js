@@ -8,10 +8,8 @@ import Path from "./Path";
 const Home = () => {
 
     const [currentState, setCurrentState] = useState("...");
-    const user = useAuth();
+    const auth = useAuth();
 
-
-    console.log(user)
 
     const handleMouseOver = (e) => {
         setCurrentState(e.target.id.toUpperCase());
@@ -22,7 +20,6 @@ const Home = () => {
         setCurrentState("...");
     }
 
-    
 
     return (
         <div className="home">
@@ -30,11 +27,11 @@ const Home = () => {
         <div className="state-abbreviation"><h4>{currentState}</h4></div>
             <div className="map-container">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="192 9 1028 746" className="svg-map" aria-label="Map of USA">
-                {user.usaMap.locations.map( loc => (
+                {auth.usaMap.locations.map( loc => (
                     <Path key={loc.id} location={loc} 
                     handleMouseOver={handleMouseOver}
                     handleMouseLeave={handleMouseLeave}
-                    handleMapClick={user.handleMapClick}
+                    handleMapClick={auth.handleMapClick}
                      />
                 ))}
                 </svg>

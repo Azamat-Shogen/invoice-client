@@ -63,7 +63,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   <StyledTableCell align="center">${item.stateFee}</StyledTableCell>
                   <StyledTableCell align="center">${item.convenienceFee}</StyledTableCell>
                   <StyledTableCell align="right">${item.cost}</StyledTableCell>
-                  <StyledTableCell align="right">{item.count}</StyledTableCell>
+                  <StyledTableCell align="center">{item.count}</StyledTableCell>
                   <StyledTableCell align="center">
                     <div>
                       <RemoveIcon className={classes.icondRemoveStyle}

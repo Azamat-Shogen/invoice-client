@@ -2,14 +2,37 @@ const colorDark = '#222'
 const colorDark2 = '#666'
 const colorGray = '#e3e3e3'
 const colorWhite = '#fff'
+const colorBlue = '#007bff'
+const colorCyan = '#17a2b8'
+const colorDarkGrey = '#343a40'
+const colorRed = '#dc3545'
+const colorOrange = '#fd7e14'
+
+
 
 const styles = {
     dark: {
       color: colorDark,
     },
+
+    red: {
+      color: colorRed
+    },
+
+    darkGrey: {
+      color: colorDarkGrey
+    },
   
     white: {
       color: colorWhite,
+    },
+
+    blue: {
+      color: colorBlue,
+    },
+
+    cyan: {
+      color: colorCyan,
     },
   
     'bg-dark': {

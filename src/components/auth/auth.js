@@ -7,7 +7,8 @@ const AuthContext = createContext(null)
 const defaultUser = {
     name: "john",
     email: 'john@gmail.com',
-    status: 'active'
+    status: 'pending',
+    company: null,
 }
 
 
@@ -17,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     const [itemCount, setItemCount] = useState(0);
     const [total, setTotal] = useState(0.0);
     const [serviceFee, setServiceFee] = useState(25);
-    const [grandTotal, setGrandTotal] = useState(0, 0)
+    const [grandTotal, setGrandTotal] = useState(0)
     const [usaMap, setMap] = useState(MAP);
     
 
@@ -27,6 +28,11 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
+        setTotal(0.0);
+        setMap(MAP);
+        setCart([]);
+        setItemCount(0)
+        setGrandTotal(0);
     }
 
     const addToCart = (item) => {
@@ -62,6 +68,11 @@ export const AuthProvider = ({ children }) => {
 
        
     const handleMapClick = (stateId) => {
+
+        if(!user){
+            alert('Authentication requiered. Please Login or Register.');
+            return;
+        }
 
         toggleChecked(stateId)
         const item = usaMap.locations.find(el => el.id === stateId);
