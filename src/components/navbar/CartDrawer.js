@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Button from '@material-ui/core/Button';
+import { NavLink } from "react-router-dom";
+
 import Table from '@material-ui/core/Table';
 import { useAuth } from "../auth/auth";
 import TableBody from '@material-ui/core/TableBody';
@@ -12,6 +14,7 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import Paper from '@material-ui/core/Paper';
 import TableFooter from '@material-ui/core/TableFooter';
 import { useStyles, StyledMenu, StyledTableCell, StyledTableRow } from "./drawerStyles";
+import { Link } from "@material-ui/core";
 
 
 
@@ -86,13 +89,19 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                <StyledTableCell align="center">Grand total: {user.grandTotal}</StyledTableCell>
                <StyledTableCell align="center">{''} </StyledTableCell>
                <StyledTableCell align="right">
-                  <Button variant="contained" 
+                  {/* <Button variant="contained" 
                           style={{color: 'white'}}  
                           size="small" 
                           color="primary"
                           href="/invoice"
                           >
-                          Invoice</Button>
+                          Invoice
+                  </Button> */}
+
+                  <NavLink className="invoiceLink" onClick={() => onclose()} type="button" 
+                   to="/invoice" variant="contained">Invoice
+                   </NavLink>
+
                </StyledTableCell>
 
                {/* <StyledTableCell align="center">{''} </StyledTableCell> */}

@@ -1,16 +1,19 @@
 import React, {Fragment} from "react";
 import { Text } from "@react-pdf/renderer"
-import compose from "../styles/compose";
+import compose from '../../../styles/compose';
 
 const EditableInput = ({ className, placeholder, value, onChange, pdfMode }) => {
 
     return (
         <Fragment>
             {pdfMode ? (
-                <Text style={compose('span ' + (className ? className : ''))}>{value}</Text>
+                
+               <Text style={compose('span ' + (className ? className : ''))}>{value}</Text>
+
             ) : (
                 <input
                   type="text"
+                  style={{lineHeight: '23px'}}
                   className={'input ' + (className ? className : '')}
                   placeholder={placeholder || ''}
                   value={value || ''}
@@ -22,4 +25,6 @@ const EditableInput = ({ className, placeholder, value, onChange, pdfMode }) => 
 
 }
 
-// export default EditableInput;
+export default EditableInput;
+
+{/* <Text style={compose('span ' + (className ? className : ''))}>{value}</Text> */}

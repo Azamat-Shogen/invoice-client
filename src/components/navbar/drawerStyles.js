@@ -106,6 +106,6 @@ export const StyledMenu = withStyles({
             padding: "5px",
             transform: "scale(1.2)"
         }
-    }
+    },
 
   }));

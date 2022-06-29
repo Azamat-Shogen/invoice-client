@@ -20,7 +20,7 @@ const NavBar = () => {
 
     const handleLogout = () => {
         auth.logout();
-        navigate('/')
+        navigate('/about')
     }
 
     const handleCartClick = (event) => {
@@ -49,6 +49,8 @@ const NavBar = () => {
                 <ul className="navbar-nav">
                         {/* <li className="nav-item active" > */}
                         {/* TODO: If user logged in, show profile */}
+
+                      
 
                         {auth.user && (
                             <li className="nav-item" >

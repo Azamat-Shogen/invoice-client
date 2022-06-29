@@ -153,6 +153,18 @@ const styles = {
     'fs-20': {
       fontSize: '20px',
     },
+
+    'fs-14': {
+      fontSize: '14px',
+    },
+
+    'cacursive': {
+      fontFamily: 'cursive'
+    },
+
+    'fs-32': {
+      fontSize: '32px',
+    },
   
     'fs-45': {
       fontSize: '45px',
