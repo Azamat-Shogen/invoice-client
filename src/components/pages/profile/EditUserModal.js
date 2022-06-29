@@ -1,5 +1,12 @@
 import './_edit-user.scss'
+import { loginUser } from '../../api/actions'
 
+
+const defaultData = {
+  name: 'steve',
+  email: 'azshob@gmail.com',
+  cart: [{state: 'ca'}, {state: 'az'}]
+}
 
 const EditUserModal = () => {
 
@@ -7,6 +14,12 @@ const EditUserModal = () => {
     const handleChange = () => {
 
     }
+
+    const demo = () => {
+      loginUser(defaultData)
+    }
+
+   
 
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -32,7 +45,7 @@ const EditUserModal = () => {
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" className="btn btn-primary">update</button>
+                    <button type="submit" className="btn btn-primary" onClick={demo}>update</button>
                 </div>
               </form>
             </div>

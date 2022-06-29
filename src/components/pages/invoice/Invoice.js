@@ -1,12 +1,13 @@
+import InvoicePage from "./InvoicePage";
 
 
 const Invoice = () => {
-  
+
     return (
-        <div>
-            <h2>Invoice page</h2>
+        <div className="invoice-wrapper-main">
+            <InvoicePage />
         </div>
     )
-};
+}
 
 export default Invoice;

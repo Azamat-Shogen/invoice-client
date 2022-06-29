@@ -7,7 +7,7 @@ const AuthContext = createContext(null)
 const defaultUser = {
     name: "john",
     email: 'john@gmail.com',
-    status: 'pending',
+    status: 'active',
     company: null,
 }
 
