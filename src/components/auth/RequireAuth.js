@@ -1,11 +1,11 @@
-import { useAuth } from "./auth";
+import { isAuth } from "./helpers"
 import { Navigate, useLocation } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
-    const auth = useAuth();
+    const user = isAuth();
     const location = useLocation();
 
-    if(!auth.user){
+    if(!user){
         return <Navigate to="/login" state={{ path: location.pathname }} />
     }
 

@@ -1,19 +1,22 @@
 import { createContext, useState, useContext } from "react";
-import { MAP } from './map'
+import { MAP } from './map';
+import { isAuth, signout } from "./helpers";
 
 const AuthContext = createContext(null)
 
 
-const defaultUser = {
-    name: "john",
-    email: 'john@gmail.com',
-    status: 'active',
-    company: null,
-}
+// const defaultUser = {
+//     name: "john",
+//     email: 'john@gmail.com',
+//     status: 'active',
+//     company: null,
+// };
+
+
 
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(defaultUser);
+    const [user, setUser] = useState(isAuth());
     const [cart, setCart] = useState([])
     const [itemCount, setItemCount] = useState(0);
     const [total, setTotal] = useState(0.0);
@@ -21,6 +24,7 @@ export const AuthProvider = ({ children }) => {
     const [grandTotal, setGrandTotal] = useState(0)
     const [usaMap, setMap] = useState(MAP);
     
+    console.log('user is: ', user)
 
     const login = (user) => {
         setUser(user)
@@ -33,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         setCart([]);
         setItemCount(0)
         setGrandTotal(0);
+        signout(() => {console.log('signed out')});
     }
 
     const addToCart = (item) => {

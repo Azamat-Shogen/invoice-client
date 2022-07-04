@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import {Link, NavLink, useNavigate } from "react-router-dom";
+import {Link, useNavigate, Navigate } from "react-router-dom";
+import { loginUser } from '../../api/actions';
 import { validateEmail } from '../../auth/helpers';
 import {Button, CircularProgress, TextField} from '@material-ui/core';
+import { isAuth } from '../../auth/helpers';
 import {
     Avatar,
     Card,
@@ -13,15 +15,19 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import useStyles, {theme} from './authStyles';
 import {ThemeProvider} from '@material-ui/core/styles';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../auth/auth';
 
 
 
 
 
 const Login = () => {
-    
+    const [user, setUser] = useState(null)
     const [text, setText] = useState("");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
     const classes = useStyles();
     const [values, setValues] = useState({
@@ -40,12 +46,36 @@ const Login = () => {
         setValues({...values, [name]: event.target.value})
     }
 
+   
+   
+
 
     const clickSubmit = (event) => {
         event.preventDefault();
+        
+
         // setValues({...values});
         // api login
-        navigate('/register')
+        // if(loading){ callFailure('Loading')}
+        // else {
+        //     callSuccess('Success')
+        //     navigate('/')
+        // }
+
+        loginUser({email, password}, () => {
+            setUser(isAuth())
+            if(isAuth()){
+                navigate('/profile')
+            }
+           
+           
+        });
+
+       
+       
+        // if(isAuth()){
+        //     navigate('/profile')
+        // }
         
     }
 
@@ -53,8 +83,21 @@ const Login = () => {
     
   
     return (
-        <Container component="main" maxWidth="xs" className={classes.container}>
+    
+            <Container component="main" maxWidth="xs" className={classes.container}>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
             <Card className={classes.card}>
+           
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -90,7 +133,8 @@ const Login = () => {
                       margin="normal"
                       color="primary"
                       name="password"
-                      label="Password *"
+                      required
+                      label="Password"
                       id="password"
                       inputProps={inputProps}
                       autoComplete="current-password"
@@ -127,6 +171,7 @@ const Login = () => {
                 </form>
                 </Card>
         </Container>
+       
     )
 };
 

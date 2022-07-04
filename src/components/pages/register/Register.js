@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import {Link, NavLink, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import {Button, CircularProgress, TextField} from '@material-ui/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     Avatar,
     Card,
@@ -26,21 +28,50 @@ const Register = () => {
         buttonText: "Register"
     });
 
+
     const inputProps = {
         style: {
             width: 270,
         },
     }
 
+    const callSuccess = (success) => toast.success(success, {theme: "colored"});
+    const callFailure = (error) => toast.error(error, {theme: "colored"})
+
     const {name, email, password, buttonText} = values;
 
     const handleChange = (name) => (event) => {
       setValues({...values, [name]: event.target.value})
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if(loading){ callFailure('Loading')}
+        else {
+            callSuccess('Success')
+        }
+
+    }
   
     return (
         <Container component="main" maxWidth="xs" className={classes.container}>
+        <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
+       
             <Card className={classes.card}>
+            {/* <ToastContainer
+                autoClose={4000}
+                draggable
+            /> */}
             <Avatar className={classes.avatar}>
                   <LockOutlinedIcon  />
               </Avatar>
@@ -48,7 +79,7 @@ const Register = () => {
                     className={classes.header}>
                     Register
                 </Typography>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <ThemeProvider theme={theme}>
                     <TextField
                         className={classes.input}
