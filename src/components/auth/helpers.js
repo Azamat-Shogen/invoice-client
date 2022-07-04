@@ -46,9 +46,18 @@ export const removeLocalStorage = (key)=> { // the key is the name of the cookie
 // authenticate user by passing data to cookie and localstorage during signin
 export const authenticate = (response, next) => { // after successful signin
     console.log('AUTHENTICATE HELPER ON LOGIN RESPONSE ')
-    // setCookie('token', response.data.token)
-    // setLocalStorage('user', response.data.user);
-    setLocalStorage('user', response)
+    setCookie('token', response.data.token);
+    const { user } = response.data;
+    const {_id, name, email, role, status, company} = user;
+
+    setLocalStorage('user',{
+        _id,
+        name,
+        email,
+        role,
+        status,
+        company
+    })
     next();
 }
 
@@ -58,6 +67,26 @@ export const updateLocalStorage = (updateData) => {
         ...updateData
     };
     localStorage.setItem('user', JSON.stringify(user))
+}
+
+// access user info from localstorage
+export const isAuth = () => {
+    if(window !== 'undefined'){
+        const cookieChecked = getCookie('token');
+        if(cookieChecked){
+            if(localStorage.getItem('user')){
+                return JSON.parse(localStorage.getItem('user')) // get a javascript object ( from localstorage json )
+            } else{
+                return null // if not , the user is not authenticated.
+            }
+        }
+    }
+}
+
+export const signout = next => {
+    removeCookie('token');
+    removeLocalStorage('user');
+    next(); // execute the next function/s
 }
 
 

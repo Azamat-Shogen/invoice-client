@@ -3,6 +3,7 @@ import './_profile.scss'
 import avatar from './profile1.jpg'
 import EditUserModal from "./EditUserModal";
 import { useAuth } from "../../auth/auth";
+import { isAuth } from "../../auth/helpers";
 
 const initialProfile = {
     name: 'John Doe',
@@ -13,16 +14,24 @@ const initialProfile = {
 
 const Profile = () => {
 
-    const auth = useAuth();
+    // const auth = useAuth();
+    const auth = isAuth();
     
-    useEffect(() => {
+    console.log('auth is: ', auth)
+    
+    // useEffect(() => {
        
-    }, [])
+    // }, [])
 
-    const statusBGColor = auth.user.status === 'active' ? 'bg-success' : 
-                       (auth.user.status === 'pending' ? 'bg-warning' : 'bg-danger')
-    const statusTextColor = auth.user.status === 'active' ? 'white' : 
-                        (auth.user.status === 'pending' ? 'blue' : 'black')
+    const statusBGColor = auth.status === 'active' ? 'bg-success' : 
+                       (auth.status === 'pending' ? 'bg-warning' : 'bg-danger')
+    const statusTextColor = auth.status === 'active' ? 'white' : 
+                        (auth.status === 'pending' ? 'blue' : 'black')
+
+    // const statusBGColor = auth.user.status === 'active' ? 'bg-success' : 
+    //                    (auth.user.status === 'pending' ? 'bg-warning' : 'bg-danger')
+    // const statusTextColor = auth.user.status === 'active' ? 'white' : 
+    //                     (auth.user.status === 'pending' ? 'blue' : 'black')
 
   
     return (
@@ -40,7 +49,7 @@ const Profile = () => {
                    <div className={`flex-fill rounded-right ${statusBGColor}`}>
 
                      {/* <h6 className="center pt-2 {}">{auth.user.status}</h6> */}
-                     <h6 className={`center pt-2 ${statusTextColor}`}>{auth.user.status}</h6>
+                     <h6 className={`center pt-2 ${statusTextColor}`}>{auth.status}</h6>
 
                    </div>
                 </div>
@@ -114,7 +123,7 @@ const Profile = () => {
                     
                 </ul>
                 <div className="card-body">
-                    {auth.user.company ? (
+                    {auth.company ? (
                     <button type="submit" className="btn btn-primary">Update</button>
 
                     ) : (
