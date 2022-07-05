@@ -29,8 +29,9 @@ Font.register({
 const InvoicePage = ({ data, pdfMode }) => {
 
     const auth = useAuth();
+    const invoiceData = {...initialInvoice, productLines: auth.cart}
 
-    const [invoice, setInvoice] = useState(data ? { ...data} : { ...initialInvoice})
+    const [invoice, setInvoice] = useState(data ? { ...data} : { ...invoiceData})
     const [subTotal, setSubtotal] = useState(0)
     const [saleTax, setSaleTax] = useState(0);
     const [serviceFee, setServiceFee] = useState(25);
@@ -38,6 +39,7 @@ const InvoicePage = ({ data, pdfMode }) => {
 
 
     console.log( auth )
+    console.log('invocie data: ', invoice);
 
 
     const dateFormat = 'MMM dd, yyyy';
@@ -48,6 +50,10 @@ const InvoicePage = ({ data, pdfMode }) => {
     if(invoice.invoiceDueDate === "") {
         invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);
     }
+
+    useEffect( () => {
+
+    },[])
 
 
    
@@ -98,11 +104,18 @@ const InvoicePage = ({ data, pdfMode }) => {
         setInvoice({ ...invoice, productLines})
     }
 
-    const calculateAmount = (quantity, rate) => {
-        const quantityNumber = parseFloat(quantity);
-        const rateNumber = parseFloat(rate);
-        const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0
+    // const calculateAmount = (quantity, rate) => {
+    //     const quantityNumber = parseFloat(quantity);
+    //     const rateNumber = parseFloat(rate);
+    //     const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0
 
+    //     return amount.toFixed(2)
+    // }
+
+    const calculateAmount = (stateFee, convFee, quantity=1) => {
+        const state = parseFloat(stateFee) || 0;
+        const conv = parseFloat(convFee) || 0;
+        const amount =  (state + conv) * quantity;
         return amount.toFixed(2)
     }
 
@@ -353,8 +366,8 @@ const InvoicePage = ({ data, pdfMode }) => {
                                     className="dark"
                                     rows={2}
                                     placeholder="Enter item description"
-                                    value={productLine.description}
-                                    onChange={(value) => handleProductLineChange(i, 'description', value)}
+                                    value={productLine.name}
+                                    onChange={(value) => handleProductLineChange(i, 'name', value)}
                                     pdfMode={pdfMode}
                                 />
                         </View>    
@@ -362,31 +375,31 @@ const InvoicePage = ({ data, pdfMode }) => {
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                       <EditableInput
                             className="dark center"
-                            value={productLine.quantity}
-                            onChange={(value) => handleProductLineChange(i, 'quantity', value)}
+                            value={productLine.count}
+                            onChange={(value) => handleProductLineChange(i, 'count', value)}
                             pdfMode={pdfMode}
                       />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
                                 className="dark center"
-                                  value={productLine.rate}
-                                  onChange={(value) => handleProductLineChange(i, 'rate', value)}
+                                  value={productLine.stateFee}
+                                  onChange={(value) => handleProductLineChange(i, 'stateFee', value)}
                                   pdfMode={pdfMode}
                             />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
                                  className="dark center"
-                                  value={productLine.quantity}
-                                  onChange={(value) => handleProductLineChange(i, 'quantity', value)}
+                                  value={productLine.convenienceFee}
+                                  onChange={(value) => handleProductLineChange(i, 'convenienceFee', value)}
                                   pdfMode={pdfMode}
                             />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
                                 className="dark center"
-                                value={calculateAmount(productLine.quantity, productLine.rate)}
+                                value={calculateAmount(productLine.stateFee, productLine.convenienceFee, productLine.count)}
                                 onChange={(value) => handleChange('productLineQuantityAmount', value)}
                                 pdfMode={pdfMode}
                             />

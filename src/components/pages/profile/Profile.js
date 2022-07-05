@@ -14,15 +14,8 @@ const initialProfile = {
 
 const Profile = () => {
 
-    // const auth = useAuth();
     const auth = isAuth();
-    
-    console.log('auth is: ', auth)
-    
-    // useEffect(() => {
-       
-    // }, [])
-
+   
     const statusBGColor = auth.status === 'active' ? 'bg-success' : 
                        (auth.status === 'pending' ? 'bg-warning' : 'bg-danger')
     const statusTextColor = auth.status === 'active' ? 'white' : 
