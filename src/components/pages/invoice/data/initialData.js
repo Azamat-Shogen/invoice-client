@@ -39,7 +39,7 @@ export const initialInvoice = {
       // { ...initialProductLine },
     ],
     subTotalLabel: 'Sub Total',
-    serviceFee: 'Service Fee ($25)',
+    serviceFeeLabel: 'Service Fee $',
     totalLabel: 'TOTAL',
     currency: '$',
     notesLabel: 'Notes',

@@ -1,16 +1,11 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import { MAP } from './map';
+import {Link, useNavigate, Navigate } from "react-router-dom";
 import { isAuth, signout } from "./helpers";
+import { loginUser } from './../api/actions';
+
 
 const AuthContext = createContext(null)
-
-
-// const defaultUser = {
-//     name: "john",
-//     email: 'john@gmail.com',
-//     status: 'active',
-//     company: null,
-// };
 
 
 
@@ -20,15 +15,24 @@ export const AuthProvider = ({ children }) => {
     const [cart, setCart] = useState([])
     const [itemCount, setItemCount] = useState(0);
     const [total, setTotal] = useState(0.0);
-    const [serviceFee, setServiceFee] = useState(25);
+    const [serviceFee] = useState(25);
     const [grandTotal, setGrandTotal] = useState(0)
     const [usaMap, setMap] = useState(MAP);
     
-    console.log('user is: ', user)
+   const navigate = useNavigate();
 
-    const login = (user) => {
-        setUser(user)
+    const login = (email, password) => {
+        loginUser({ email, password }, () => {
+            const userAuth = isAuth();
+            setUser(userAuth);
+            if(isAuth()){
+                navigate('/profile')
+            }
+        })
+       
     }
+
+ 
 
     const logout = () => {
         setUser(null);
@@ -73,8 +77,9 @@ export const AuthProvider = ({ children }) => {
 
        
     const handleMapClick = (stateId) => {
+        const userAuth = isAuth();
 
-        if(!user){
+        if(!userAuth){
             alert('Authentication requiered. Please Login or Register.');
             return;
         }

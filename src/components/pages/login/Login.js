@@ -27,7 +27,9 @@ const Login = () => {
     const [user, setUser] = useState(null)
     const [text, setText] = useState("");
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+
+    const auth = useAuth();
 
     const classes = useStyles();
     const [values, setValues] = useState({
@@ -47,43 +49,25 @@ const Login = () => {
     }
 
    
-   
+    const { email, password, buttonText} = values;
 
 
     const clickSubmit = (event) => {
         event.preventDefault();
         
-
-        // setValues({...values});
-        // api login
-        // if(loading){ callFailure('Loading')}
-        // else {
-        //     callSuccess('Success')
-        //     navigate('/')
-        // }
-
-        loginUser({email, password}, () => {
-            setUser(isAuth())
-            if(isAuth()){
-                navigate('/profile')
-            }
-           
-           
-        });
-
-       
-       
-        // if(isAuth()){
-        //     navigate('/profile')
-        // }
-        
+        // loginUser({email, password}, () => {
+        //     setUser(isAuth())
+        //     if(isAuth()){
+        //         navigate('/profile')
+        //     }          
+        // });  
+        auth.login(email, password)
     }
 
-    const { email, password, buttonText} = values;
+   
     
   
     return (
-    
             <Container component="main" maxWidth="xs" className={classes.container}>
             <ToastContainer
                 position="top-right"

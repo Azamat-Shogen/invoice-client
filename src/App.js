@@ -8,6 +8,8 @@ import Invoice from './components/pages/invoice/Invoice';
 import Login from './components/pages/login/Login';
 import Profile from './components/pages/profile/Profile';
 import Register from './components/pages/register/Register';
+import PageNotFound from './components/pages/pageNotFound/PageNotFound';
+
 
 function App() {
 
@@ -29,7 +31,8 @@ function App() {
           <RequireAuth>
                     <Invoice />
           </RequireAuth>
-          } />    
+          } />   
+        <Route path="*" element={<PageNotFound />} />   
       </Routes>
       </AuthProvider>
     </div>

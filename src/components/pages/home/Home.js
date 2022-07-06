@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "react-svg-map/lib/index.css";
 import { useAuth } from "./../../auth/auth";
+import { isAuth } from "../../auth/helpers";
 import './_home.scss'
 import Path from "./Path";
 

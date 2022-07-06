@@ -61,6 +61,13 @@ const NavBar = () => {
                                 </NavLink>
                             </li>
                         )}
+                        {user && user.role === 'admin' && (
+                            <li className="nav-item" >
+                                <NavLink className="nav-link" to="/users">
+                                    Users
+                                </NavLink>
+                            </li>
+                        )}
                        {!user && (
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/login">

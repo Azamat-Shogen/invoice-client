@@ -29,8 +29,9 @@ Font.register({
 const InvoicePage = ({ data, pdfMode }) => {
 
     const auth = useAuth();
+    const invoiceData = {...initialInvoice, productLines: auth.cart}
 
-    const [invoice, setInvoice] = useState(data ? { ...data} : { ...initialInvoice})
+    const [invoice, setInvoice] = useState(data ? { ...data} : { ...invoiceData})
     const [subTotal, setSubtotal] = useState(0)
     const [saleTax, setSaleTax] = useState(0);
     const [serviceFee, setServiceFee] = useState(25);
@@ -38,6 +39,7 @@ const InvoicePage = ({ data, pdfMode }) => {
 
 
     console.log( auth )
+    console.log('invocie data: ', invoice);
 
 
     const dateFormat = 'MMM dd, yyyy';
@@ -48,6 +50,10 @@ const InvoicePage = ({ data, pdfMode }) => {
     if(invoice.invoiceDueDate === "") {
         invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);
     }
+
+    useEffect( () => {
+
+    },[])
 
 
    
@@ -69,7 +75,7 @@ const InvoicePage = ({ data, pdfMode }) => {
             if(i === index){
                 const newProductLine = { ...productLine};
 
-                if(name === 'description'){
+                if(name === 'name'){
                     newProductLine[name] = value;
                 } else {
                     if(value[value.length-1] === '.' ||
@@ -98,21 +104,45 @@ const InvoicePage = ({ data, pdfMode }) => {
         setInvoice({ ...invoice, productLines})
     }
 
-    const calculateAmount = (quantity, rate) => {
-        const quantityNumber = parseFloat(quantity);
-        const rateNumber = parseFloat(rate);
-        const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0
+    // const calculateAmount = (quantity, rate) => {
+    //     const quantityNumber = parseFloat(quantity);
+    //     const rateNumber = parseFloat(rate);
+    //     const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0
 
+    //     return amount.toFixed(2)
+    // }
+
+    const calculateAmount = (stateFee, convFee, quantity=1) => {
+        const state = parseFloat(stateFee) || 0;
+        const conv = parseFloat(convFee) || 0;
+        const amount =  (state + conv) * quantity;
         return amount.toFixed(2)
     }
+
+    // useEffect(() => {
+    //     let subTotal = 0;
+
+    //     invoice.productLines.forEach( productLine => {
+    //         const quantityNumber = parseFloat(productLine.quantity);
+    //         const rateNumber = parseFloat(productLine.rate);
+    //         const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0;
+
+    //         subTotal += amount;
+    //     })
+
+    //     setSubtotal(subTotal)
+    // }, [invoice.productLines])
 
     useEffect(() => {
         let subTotal = 0;
 
         invoice.productLines.forEach( productLine => {
-            const quantityNumber = parseFloat(productLine.quantity);
-            const rateNumber = parseFloat(productLine.rate);
-            const amount = quantityNumber && rateNumber ? quantityNumber * rateNumber : 0;
+            const quantityNumber = parseFloat(productLine.count);
+            const rateNumber = parseFloat(productLine.stateFee);
+            const convenienceFee = parseFloat(productLine.convenienceFee) ;
+
+            const amount = quantityNumber && rateNumber ?
+                  (rateNumber + convenienceFee) * quantityNumber : 0;
 
             subTotal += amount;
         })
@@ -121,13 +151,15 @@ const InvoicePage = ({ data, pdfMode }) => {
     }, [invoice.productLines])
 
 
-    useEffect( () => {
-        const match = invoice.serviceFee.match(/(\d+)%/)
-        const taxRate = match ? parseFloat(match[1]) : 0
-        const saleTax = subTotal ? (subTotal * taxRate) / 100 : 0;
+    
 
-        setSaleTax(saleTax);
-    }, [subTotal, invoice.serviceFee])
+    // useEffect( () => {
+    //     const match = invoice.serviceFee.match(/(\d+)%/)
+    //     const taxRate = match ? parseFloat(match[1]) : 0
+    //     const saleTax = subTotal ? (subTotal * taxRate) / 100 : 0;
+
+    //     setSaleTax(saleTax);
+    // }, [subTotal, invoice.serviceFee])
 
 
   
@@ -353,8 +385,8 @@ const InvoicePage = ({ data, pdfMode }) => {
                                     className="dark"
                                     rows={2}
                                     placeholder="Enter item description"
-                                    value={productLine.description}
-                                    onChange={(value) => handleProductLineChange(i, 'description', value)}
+                                    value={productLine.name}
+                                    onChange={(value) => handleProductLineChange(i, 'name', value)}
                                     pdfMode={pdfMode}
                                 />
                         </View>    
@@ -362,34 +394,37 @@ const InvoicePage = ({ data, pdfMode }) => {
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                       <EditableInput
                             className="dark center"
-                            value={productLine.quantity}
-                            onChange={(value) => handleProductLineChange(i, 'quantity', value)}
+                            value={productLine.count}
+                            onChange={(value) => handleProductLineChange(i, 'count', value)}
                             pdfMode={pdfMode}
                       />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
                                 className="dark center"
-                                  value={productLine.rate}
-                                  onChange={(value) => handleProductLineChange(i, 'rate', value)}
+                                  value={productLine.stateFee}
+                                  onChange={(value) => handleProductLineChange(i, 'stateFee', value)}
                                   pdfMode={pdfMode}
                             />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
                                  className="dark center"
-                                  value={productLine.quantity}
-                                  onChange={(value) => handleProductLineChange(i, 'quantity', value)}
+                                  value={productLine.convenienceFee}
+                                  onChange={(value) => handleProductLineChange(i, 'convenienceFee', value)}
                                   pdfMode={pdfMode}
                             />
                         </View>
                         <View className="w-10 p-4-8" pdfMode={pdfMode}>
                             <EditableInput
+                                style={{pointerEvents: 'none'}}
                                 className="dark center"
-                                value={calculateAmount(productLine.quantity, productLine.rate)}
-                                onChange={(value) => handleChange('productLineQuantityAmount', value)}
+                                value={calculateAmount(productLine.stateFee, productLine.convenienceFee, productLine.count)}
                                 pdfMode={pdfMode}
+                                onChange={(val) => {}}
+                                disabled={true}
                             />
+                           
                         </View>
 
                            
@@ -433,10 +468,32 @@ const InvoicePage = ({ data, pdfMode }) => {
                         </View>
                     </View>
                     <View className="flex" pdfMode={pdfMode}>
-                        <View className="w-50 mt-2" pdfMode={pdfMode}>
+                        <View className="w-60 mt-2 flex" pdfMode={pdfMode}>
                             <EditableInput
-                                value={invoice.serviceFee}
-                                onChange={(value) => handleChange('serviceFee', value)}
+                                className="w-55"
+                                // value={`${invoice.serviceFeeLabel} (${auth.serviceFee})`}
+                                value={invoice.serviceFeeLabel}
+                                onChange={(value) => handleChange('serviceFeeLabel', value)}
+                                pdfMode={pdfMode}
+                            />
+                             <EditableInput
+                                className="w-50"
+                                value={serviceFee}
+                                onChange={(value) => { setServiceFee(value)}}
+                                pdfMode={pdfMode}
+                            />
+                             <EditableInput
+                                className="w-50"
+                                // value={`${invoice.serviceFeeLabel} (${auth.serviceFee})`}
+                                value={'x'}
+                                onChange={(value) => handleChange('serviceFeeLabel', value)}
+                                pdfMode={pdfMode}
+                            />
+                            <EditableInput
+                                className="w-50"
+                                // value={`${invoice.serviceFeeLabel} (${auth.serviceFee})`}
+                                value={auth.serviceFee}
+                                onChange={(value) => handleChange('serviceFeeLabel', value)}
                                 pdfMode={pdfMode}
                             />
                         </View>
@@ -462,6 +519,7 @@ const InvoicePage = ({ data, pdfMode }) => {
                                 subTotal + saleTax : 0).toFixed(2) }
                                 onChange={(value) => handleChange('currency', value)}
                                 pdfMode={pdfMode}
+                                disabled={true}
                             />
                             {/* <Text className="right bold dark w-auto" pdfMode={pdfMode}>
                                 {(typeof subTotal !== 'undefined' && typeof saleTax !== 'undefined' ?
