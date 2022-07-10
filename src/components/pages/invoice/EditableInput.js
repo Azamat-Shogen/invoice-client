@@ -2,7 +2,7 @@ import React, {Fragment} from "react";
 import { Text } from "@react-pdf/renderer"
 import compose from '../../../styles/compose';
 
-const EditableInput = ({ className, placeholder, value, onChange, pdfMode, disabled }) => {
+const EditableInput = ({ className, placeholder, value, onChange, pdfMode, disabled, maxLength }) => {
 
     return (
         <Fragment>
@@ -17,6 +17,7 @@ const EditableInput = ({ className, placeholder, value, onChange, pdfMode, disab
                   className={'input ' + (className ? className : '')}
                   placeholder={placeholder || ''}
                   value={value || ''}
+                  maxLength={maxLength}
                   disabled={disabled || false}
                   onChange={onChange ? (e) => onChange(e.target.value) : undefined}
                 />

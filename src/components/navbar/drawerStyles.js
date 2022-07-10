@@ -62,7 +62,7 @@ export const StyledMenu = withStyles({
     },
     menu: {
       "& .MuiPaper-root": {
-        backgroundColor: "lightblue",
+        backgroundColor: "#e5e9eb",
       },
       "& .MuiList-padding": {
         padding: 0,

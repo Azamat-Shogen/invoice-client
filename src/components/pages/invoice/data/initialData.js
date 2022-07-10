@@ -1,9 +1,18 @@
 
 export const initialProductLine = {
-    description: "",
-    quantity: '1',
-    rate: '0.00'
+    name: "",
+    count: 1,
+    stateFee: '0',
+    convenienceFee: 0,
+    cost: '0.00'
 }
+
+export const getRandomId = (min = 0, max = 500000) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    const num =  Math.floor(Math.random() * (max - min + 1)) + min;
+    return num.toString().padStart(6, "0")
+  };
 
 export const initialInvoice = {
     logo: '',
@@ -20,7 +29,7 @@ export const initialInvoice = {
     clientAddress2: '',
     clientCountry: 'United States',
     invoiceTitleLabel: 'Invoice#',
-    invoiceTitle: '',
+    invoiceTitle: `INV-${getRandomId()}`,
     invoiceDateLabel: 'Invoice Date',
     invoiceDate: '',
     invoiceDueDateLabel: 'Due Date',
@@ -29,19 +38,14 @@ export const initialInvoice = {
     productLineQuantity: 'Qty',
     productLineQuantityRate: 'Rate',
     productLineQuantityAmount: 'Amount',
-    productLines: [
-      // {
-      //   description: 'Brochure Design',
-      //   quantity: '2',
-      //   rate: '100.00',
-      // },
-      // { ...initialProductLine },
-      // { ...initialProductLine },
-    ],
+    productLines: [],
     subTotalLabel: 'Sub Total',
     serviceFeeLabel: 'Service Fee $',
-    totalLabel: 'TOTAL',
+    serviceFee: 25,
+    totalQuantity: 0,
+    totalLabel: 'BALANCE DUE',
     currency: '$',
+    multiplySign: 'x',
     notesLabel: 'Notes',
     notes: 'It was great doing business with you.',
     termLabel: 'Terms & Conditions',
