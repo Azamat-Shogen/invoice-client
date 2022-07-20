@@ -2,7 +2,7 @@
     margin: 0px auto 50px auto;
     width: 90vw;
     box-sizing: border-box;
-    
+    height: 100vh;
     $breakpoint-tablet: 900px;
     @media (max-width: $breakpoint-tablet) {
         width: 100vw;
