@@ -9,6 +9,7 @@ import Login from './components/pages/login/Login';
 import Profile from './components/pages/profile/Profile';
 import Register from './components/pages/register/Register';
 import PageNotFound from './components/pages/pageNotFound/PageNotFound';
+import Users from './components/pages/users/Users';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Profile />
           </RequireAuth>
           } />
+        <Route path='users' element={<Users />}/>
         <Route path='invoice' element={
           <RequireAuth>
                     <Invoice />
