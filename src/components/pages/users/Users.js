@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import AddIcon from '@material-ui/icons/Add';
 import { Grid, TablePagination, CircularProgress, Button} from '@material-ui/core';
 import useStyles from './usersStyles'
+import UserRow from './UserRow';
+
 
 const initData = [
     {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'active'},
@@ -44,7 +46,7 @@ const Users = () => {
     const [loading, setLoading] = useState(true)
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
 
     const classes = useStyles();
 
@@ -56,6 +58,22 @@ const Users = () => {
        }
         
     }, [users])
+
+    useEffect( () => {
+        if(users.length > 0){
+            setRows(users)
+        }
+    }, [users])
+
+
+    const handleChangePage = (newPage) => {
+        setPage(newPage)
+    }
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0)
+    }
 
     return (
         <div>
@@ -80,7 +98,10 @@ const Users = () => {
                         </TableBody>
                    ): (
                         <TableBody>
-                            {users.map( user => {})}
+                            {rows.slice( page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row, i) => (
+                                <UserRow  key={i} user={row}/>
+                            ))}
                         </TableBody>
                    )}
               </Table>
