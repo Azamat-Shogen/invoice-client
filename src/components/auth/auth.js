@@ -84,6 +84,12 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
+        console.log(userAuth)
+        if(userAuth.status === 'Restricted'){
+            alert('Status code: Restricted');
+            return;
+        }
+
         toggleChecked(stateId)
         const item = usaMap.locations.find(el => el.id === stateId);
         const existsInCartItem = cart.find(el => el.id === item.id);

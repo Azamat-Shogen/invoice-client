@@ -16,17 +16,12 @@ const Profile = () => {
 
     const auth = isAuth();
    
-    const statusBGColor = auth.status === 'active' ? 'bg-success' : 
-                       (auth.status === 'pending' ? 'bg-warning' : 'bg-danger')
-    const statusTextColor = auth.status === 'active' ? 'white' : 
-                        (auth.status === 'pending' ? 'blue' : 'black')
+    const statusBGColor = auth.status === 'Active' ? 'bg-success' : 
+                       (auth.status === 'Pending' ? 'bg-warning' : 'bg-danger')
+    const statusTextColor = auth.status === 'Active' ? 'white' : 
+                        (auth.status === 'Pending' ? 'blue' : 'black')
 
-    // const statusBGColor = auth.user.status === 'active' ? 'bg-success' : 
-    //                    (auth.user.status === 'pending' ? 'bg-warning' : 'bg-danger')
-    // const statusTextColor = auth.user.status === 'active' ? 'white' : 
-    //                     (auth.user.status === 'pending' ? 'blue' : 'black')
-
-  
+   
     return (
         <div className="profile">
             
