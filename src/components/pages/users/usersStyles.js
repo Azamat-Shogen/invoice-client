@@ -36,9 +36,26 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20
     },
 
+    collapse: {
+        display: 'flex',
+        justifyContent: 'space-around'
+    },
+
     linkButton: {
         backgroundColor: "#1976d2",
     },
+
+    checkbox_label: {
+        "& .MuiTypography-body1": {
+            fontSize: '0.8rem',
+            fontWeight: 'bold'
+        }
+    },
+    
+  delete_button: {
+   maxHeight: '2rem',
+   top: 5,
+  },
 
     row: {
         backgroundColor: "#effafb"
@@ -66,6 +83,19 @@ const useStyles = makeStyles((theme) => ({
 
     checkboxLabel: {
         color: "#007bff",
+    },
+
+    userStatusActive: {
+        color: "green",
+        fontWeight: 700
+    },
+    userStatusPending: {
+        color: "orange",
+        fontWeight: 700
+    },
+    userStatusRestricted: {
+        color: "#ef3c3c",
+        fontWeight: 700
     }
 
 }));

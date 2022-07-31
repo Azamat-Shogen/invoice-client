@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import { fetchAllUsers } from '../../api/actions';
+import { getCookie } from '../../auth/helpers';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
@@ -13,13 +15,13 @@ import UserRow from './UserRow';
 
 
 const initData = [
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'restricted'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'restricted'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'pending'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'pending'}
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Restricted'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
+    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'}
 ]
 
 function generateUsersData(arr){
@@ -48,21 +50,51 @@ const Users = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
 
+    const token = getCookie('token');
+
+
     const classes = useStyles();
 
-    useEffect( () => {
-        // api call here
-        setUsers(initData);
-       if(users.length > 0){
-        setLoading(false)
-       }
+    // useEffect( () => {
+    //     // api call here
+    //     setUsers(initData);
+    //    if(users.length > 0){
+    //     setLoading(false)
+    //    }
         
-    }, [users])
+    // }, [users])
+
+
+    useEffect( () => {
+        const fetchedData = fetchAllUsers(token)
+        fetchedData.then(result => {
+            const newData = [];
+            result.data.forEach( el => {
+                newData.push(
+                    {id: el._id, 
+                        name: el.name,
+                        email: el.email,
+                        status: el.status}
+                )
+            })
+            
+            console.log(newData)
+            setUsers(result.data)
+            setLoading(false);
+        }).catch(err => setLoading(true));
+
+        return () => {
+           console.log('users: unmount')
+        }
+      
+    }, [loading, token])
+
 
     useEffect( () => {
         if(users.length > 0){
             setRows(users)
         }
+
     }, [users])
 
 

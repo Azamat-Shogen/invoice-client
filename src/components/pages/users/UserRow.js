@@ -13,8 +13,26 @@ import useStyles from './usersStyles'
 
 const UserRow = React.memo(({ user }) => {
     const [open, setOpen] = useState(false);
-
+    const [userStatus, setUserStatus] = useState(user.status);
     const classes = useStyles();
+
+    const userStatusStyle = user.status === 'Active' ? 
+                            classes.userStatusActive : (user.status === 'Pending' ? 
+                            classes.userStatusPending: classes.userStatusRestricted)
+
+   const [userStatusClass, setUserStatusClass] = useState(userStatusStyle)
+
+   
+
+    const handleChange = (e) => {
+        const data = e.target.value
+        setUserStatus(data)
+        const tempStyle = data === 'Active' ? 
+                         classes.userStatusActive : (data === 'Pending' ? 
+                         classes.userStatusPending: classes.userStatusRestricted);
+        setUserStatusClass(tempStyle);
+    }
+
 
     return (
         <React.Fragment>
@@ -26,16 +44,35 @@ const UserRow = React.memo(({ user }) => {
            </TableCell>
            <TableCell align='left'>{user.name}</TableCell>
            <TableCell align='center'>{user.email}</TableCell>
-           <TableCell align='center'>{user.status}</TableCell>
+           <TableCell className={userStatusClass} align='center'>{user.status}</TableCell>
 
         </TableRow>
         <TableRow className={classes.row2}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box margin={1}>
-                <Grid style={{paddingTop: 0, float: 'right'}}>
+                <Grid className={classes.collapse}>
+                    <FormControl>
+                    {/* <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel> */}
+                    <RadioGroup
+                    row
+                    aria-labelledby='demo-row-radio-buttons-group-label'
+                    name='row-radio-buttons-group'
+                    value={userStatus}
+                    onChange={handleChange}
+                    >
+                    <FormControlLabel value="Active" className={classes.checkbox_label} control={<Radio size='small' 
+                         style={{color: 'green'}} />} label="Active"/>
+                    <FormControlLabel value="Pending" className={classes.checkbox_label} control={<Radio size='small' 
+                         style={{color: 'orange'}} />} label="Pending"/>
+                     <FormControlLabel value="Restricted" className={classes.checkbox_label} control={<Radio size='small' 
+                         style={{color: 'red'}} />} label="Restricted"/>
+
+                    </RadioGroup>
+                    </FormControl>
                     <Button 
-                        className={''}
+                        style={{outline: 'none'}}
+                        className={classes.delete_button}
                         variant="contained"
                         size="small"
                         color="secondary">

@@ -20,3 +20,18 @@ export const loginUser = (userData, next) => {
         callFailure(msg)
     })
 }
+
+export const fetchAllUsers = async (token) => {
+  
+    try {
+        // const users = await axios.get(`${process.env.REACT_APP_API}/users`);
+        const users = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_API}/users`,
+            headers: { Authorization: `Bearer ${token}`}
+        })
+        return users
+    } catch (error) {
+        return null
+    }
+}

@@ -99,11 +99,10 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   </Button> */}
 
                   <NavLink className="invoiceLink" onClick={() => onclose()} type="button" 
-                   to="/invoice" variant="contained">Invoice
+                   to={`${user.user.status === "Active" ? "/invoice" : "/errpr"}`} variant="contained">Invoice
                    </NavLink>
 
                </StyledTableCell>
-
                {/* <StyledTableCell align="center">{''} </StyledTableCell> */}
                </StyledTableRow>
             </TableFooter>
