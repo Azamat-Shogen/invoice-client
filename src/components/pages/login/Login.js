@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import {Link, useNavigate, Navigate } from "react-router-dom";
-import { loginUser } from '../../api/actions';
 import { validateEmail } from '../../auth/helpers';
 import {Button, CircularProgress, TextField} from '@material-ui/core';
 import { isAuth } from '../../auth/helpers';
@@ -141,7 +140,7 @@ const Login = () => {
 
                   <Grid container className={classes.linkContainer}>
                     <Grid item xs className={classes.link} >
-                          <Link to="#" onClick={() => alert('Please contact admin')}  >
+                          <Link to="#" onClick={() => alert('Please contact the administartion at: baki47hanma@gmail.com')}  >
                               Forgot Password?
                           </Link>
                       </Grid>

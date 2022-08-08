@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {Link, NavLink, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
+import { registerUser } from '../../api/actions';
 import {Button, CircularProgress, TextField} from '@material-ui/core';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +21,7 @@ import {ThemeProvider} from '@material-ui/core/styles';
 
 const Register = () => {
     const classes = useStyles();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
     const [values, setValues] = useState({
         name: "",
@@ -46,10 +48,12 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(loading){ callFailure('Loading')}
-        else {
-            callSuccess('Success')
-        }
+        registerUser({ name, email, password }, () => {
+            console.log('tesing register: ');
+            setTimeout( () => {
+                navigate('/login')
+            }, 2000)
+        })
 
     }
   
