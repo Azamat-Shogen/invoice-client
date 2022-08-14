@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     
   delete_button: {
    maxHeight: '2rem',
-   top: 5,
+   top: 25,
   },
 
     row: {

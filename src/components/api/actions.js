@@ -49,3 +49,22 @@ export const fetchAllUsers = async (token) => {
         return null
     }
 }
+
+export const changeUserStatus = async ({token, status, userId}) => {
+    const options = {
+         headers : {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    const body = {status, userId}
+    
+   await axios.patch(`${process.env.REACT_APP_API}/users`, body, options)
+    .then(response => {
+        console.log('success: ', response)
+    })
+    .catch(error => {
+        console.log('error: ', error);
+        console.log(body)
+    })
+}
