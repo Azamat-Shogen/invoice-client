@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import { changeUserStatus } from '../../api/actions';
+import { getCookie } from '../../auth/helpers';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -14,23 +16,33 @@ import useStyles from './usersStyles'
 const UserRow = React.memo(({ user }) => {
     const [open, setOpen] = useState(false);
     const [userStatus, setUserStatus] = useState(user.status);
+    const token = getCookie('token');
     const classes = useStyles();
-
+ 
     const userStatusStyle = user.status === 'Active' ? 
                             classes.userStatusActive : (user.status === 'Pending' ? 
                             classes.userStatusPending: classes.userStatusRestricted)
 
    const [userStatusClass, setUserStatusClass] = useState(userStatusStyle)
 
-   
+
 
     const handleChange = (e) => {
         const data = e.target.value
         setUserStatus(data)
-        const tempStyle = data === 'Active' ? 
-                         classes.userStatusActive : (data === 'Pending' ? 
+    }
+
+    const submitStatus = () => {
+        const tempStyle = userStatus === 'Active' ? 
+                         classes.userStatusActive : (userStatus === 'Pending' ? 
                          classes.userStatusPending: classes.userStatusRestricted);
-        setUserStatusClass(tempStyle);
+
+        changeUserStatus ({ 
+            token: token, 
+            status: userStatus, 
+            userId: user._id
+        });
+        setUserStatusClass(tempStyle);    
     }
 
 
@@ -52,6 +64,7 @@ const UserRow = React.memo(({ user }) => {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box margin={1}>
                 <Grid className={classes.collapse}>
+                    <form onSubmit={submitStatus}>
                     <FormControl>
                     {/* <FormLabel id="demo-row-radio-buttons-group-label">Gender</FormLabel> */}
                     <RadioGroup
@@ -62,20 +75,33 @@ const UserRow = React.memo(({ user }) => {
                     onChange={handleChange}
                     >
                     <FormControlLabel value="Active" className={classes.checkbox_label} control={<Radio size='small' 
-                         style={{color: 'green'}} />} label="Active"/>
+                         style={{color: 'green'}} />}  label="Active"/>
                     <FormControlLabel value="Pending" className={classes.checkbox_label} control={<Radio size='small' 
                          style={{color: 'orange'}} />} label="Pending"/>
                      <FormControlLabel value="Restricted" className={classes.checkbox_label} control={<Radio size='small' 
                          style={{color: 'red'}} />} label="Restricted"/>
 
                     </RadioGroup>
+                    <Button
+                     style={{outline: 'none'}}
+                      type='submit'
+                      variant="contained"
+                      color="default"
+                      size="small"
+                      disabled={user.role === 'admin'}
+                        >
+                        Change
+                    </Button>
                     </FormControl>
+                    </form>
                     <Button 
                         style={{outline: 'none'}}
                         className={classes.delete_button}
                         variant="contained"
                         size="small"
+                        disabled={user.role === 'admin'}
                         color="secondary">
+                        
                         Delete
                     </Button>
                 </Grid>

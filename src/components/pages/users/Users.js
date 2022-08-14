@@ -48,7 +48,7 @@ const Users = () => {
     const [loading, setLoading] = useState(true)
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(4);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const token = getCookie('token');
 
@@ -78,7 +78,6 @@ const Users = () => {
                 )
             })
             
-            console.log(newData)
             setUsers(result.data)
             setLoading(false);
         }).catch(err => setLoading(true));
