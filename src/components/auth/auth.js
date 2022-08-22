@@ -8,8 +8,6 @@ import { loginUser } from './../api/actions';
 const AuthContext = createContext(null)
 
 
-
-
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(isAuth());
     const [cart, setCart] = useState([])
@@ -31,8 +29,6 @@ export const AuthProvider = ({ children }) => {
         })
        
     }
-
- 
 
     const logout = () => {
         setUser(null);
@@ -84,7 +80,6 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        console.log(userAuth)
         if(userAuth.status === 'Restricted'){
             alert('Status code: Restricted');
             return;

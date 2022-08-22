@@ -1,0 +1,20 @@
+.users-modal-content {
+    background-color: rgb(252, 253, 241);
+}
+
+.users-modal-title {
+    margin: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(72, 74, 76);
+}
+
+.users-modal-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto 0;
+ }
+
+ .users-modal-footer button {
+    margin: 5px;
+ }
