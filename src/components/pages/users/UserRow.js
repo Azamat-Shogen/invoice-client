@@ -8,16 +8,20 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import Collapse from '@material-ui/core/Collapse';
 import Box from '@material-ui/core/Box';
-import {Button, Radio, RadioGroup, Checkbox, FormLabel, FormControlLabel, Grid, FormControl} from '@material-ui/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import DeleteUserModal from './DeleteUserModal';
+import {Button, Radio, RadioGroup, FormControlLabel, Grid, FormControl} from '@material-ui/core';
 import useStyles from './usersStyles'
 
 
-const UserRow = React.memo(({ user }) => {
+const UserRow = React.memo(({ user, setLoading }) => {
     const [open, setOpen] = useState(false);
     const [userStatus, setUserStatus] = useState(user.status);
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
     const token = getCookie('token');
     const classes = useStyles();
+
+    
  
     const userStatusStyle = user.status === 'Active' ? 
                             classes.userStatusActive : (user.status === 'Pending' ? 
@@ -100,10 +104,14 @@ const UserRow = React.memo(({ user }) => {
                         variant="contained"
                         size="small"
                         disabled={user.role === 'admin'}
-                        color="secondary">
-                        
+                        color="secondary"
+                        onClick={toggle}
+                        >
                         Delete
                     </Button>
+                  
+                    <DeleteUserModal setLoading={setLoading} modal={modal} toggle={toggle} token={token} userId={user._id} />
+                   
                 </Grid>
                 </Box>
             </Collapse>

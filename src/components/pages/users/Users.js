@@ -2,44 +2,17 @@ import {useState, useEffect} from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
+import { ToastContainer } from 'react-toastify';
 import { fetchAllUsers } from '../../api/actions';
 import { getCookie } from '../../auth/helpers';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import AddIcon from '@material-ui/icons/Add';
-import { Grid, TablePagination, CircularProgress, Button} from '@material-ui/core';
+import { TablePagination, CircularProgress } from '@material-ui/core';
 import useStyles from './usersStyles'
 import UserRow from './UserRow';
 
-
-const initData = [
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Restricted'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Active'},
-    {name: 'steve', email: 'jhsdfsdf@gmail.com', status: 'Pending'}
-]
-
-function generateUsersData(arr){
-    let newArr = [];
-
-    // try{
-    //   if(arr.length > 0){
-    //     newArr.push(
-
-    //     )
-    //   }
-
-    // }catch(err){
-
-    // }
-
-    // return newArr
-}
 
 
 const Users = () => {
@@ -54,16 +27,6 @@ const Users = () => {
 
 
     const classes = useStyles();
-
-    // useEffect( () => {
-    //     // api call here
-    //     setUsers(initData);
-    //    if(users.length > 0){
-    //     setLoading(false)
-    //    }
-        
-    // }, [users])
-
 
     useEffect( () => {
         const fetchedData = fetchAllUsers(token)
@@ -86,7 +49,7 @@ const Users = () => {
            console.log('users: unmount')
         }
       
-    }, [loading, token])
+    }, [loading, token, users.length])
 
 
     useEffect( () => {
@@ -94,10 +57,10 @@ const Users = () => {
             setRows(users)
         }
 
-    }, [users])
+    }, [users, users.length])
 
 
-    const handleChangePage = (newPage) => {
+    const handleChangePage = (event, newPage) => {
         setPage(newPage)
     }
 
@@ -109,6 +72,17 @@ const Users = () => {
     return (
         <div>
            <TableContainer component={Paper} className={classes.container}>
+           <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
               <Table stickyHeader aria-label="sticky table">
               <TableHead>
                        <TableRow>
@@ -131,11 +105,20 @@ const Users = () => {
                         <TableBody>
                             {rows.slice( page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, i) => (
-                                <UserRow  key={i} user={row}/>
+                                <UserRow setLoading={setLoading} key={i} user={row}/>
                             ))}
                         </TableBody>
                    )}
               </Table>
+              <TablePagination 
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
            </TableContainer>
         </div>
     )

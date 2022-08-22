@@ -1,4 +1,4 @@
-import { authenticate } from "../auth/helpers";
+import { authenticate, updateLocalStorage } from "../auth/helpers";
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
@@ -56,7 +56,6 @@ export const changeUserStatus = async ({token, status, userId}) => {
             'Authorization': `Bearer ${token}`
         }
     }
-
     const body = {status, userId}
     
    await axios.patch(`${process.env.REACT_APP_API}/users`, body, options)
@@ -65,6 +64,59 @@ export const changeUserStatus = async ({token, status, userId}) => {
     })
     .catch(error => {
         console.log('error: ', error);
-        console.log(body)
+    })
+}
+
+export const getCompany = async (companyId, token) => {
+    try {
+        const company = await axios({
+            method: 'GET',
+            url: `${process.env.REACT_APP_API}/companyAccount/${companyId}`,
+            headers: { Authorization: `Bearer ${token}`}
+        });
+        return company.data;
+    } catch (error) {
+        return null
+    }
+}
+
+export const addCompany = async (companyData, token) => {
+    axios.post({
+        method: 'POST',
+        url: `${process.env.REACT_APP_API}/companyAccount`,
+        data: companyData,
+        headers: { Authorization: `Bearer ${token}`}
+    })
+    .then(response => {
+      updateLocalStorage({company: response.data._id });
+      callSuccess('Company added')
+    })
+    .catch(error => {
+        console.log('comp add error: ', error)
+        const msg = error.response.data.error
+        callFailure(msg)
+    })
+}
+
+export const deleteUser = async (userId, token, func) => {
+    await axios({
+        method: 'DELETE',
+        url: `${process.env.REACT_APP_API}/users`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data: {
+            userId: userId
+        }
+    })
+    .then( response => {
+        console.log(response)
+        callSuccess(response.data.message);
+        func()
+    })
+    .catch(error => {
+        console.log(error)
+        // const msg = error.response.data.error
+        callFailure('Error while deleting')
     })
 }

@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: 700,
         maxWidth: 900,
         margin: 'auto',
-        marginTop: 20
+        marginTop: 20,
+        overflow: 'scroll'
     },
 
     collapse: {
