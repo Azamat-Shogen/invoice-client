@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getCompany, addCompany } from "../../api/actions";
+import { getCompany, addCompany, updateCompany} from "../../api/actions";
 import { getCookie } from "../../auth/helpers";
 import { isAuth } from "../../auth/helpers";
 
@@ -48,9 +48,15 @@ const Company = ({ userData }) => {
       }
 
      
-    const handleAddCompany = (event) => {
+    const handleAddCompany =  (event) => {
         event.preventDefault();
         addCompany(companyData, token)
+    }
+
+
+    const handleUpdateCompany = (event) => {
+        event.preventDefault();
+        updateCompany(userData.companyId, companyData, token)
     }
 
     const { companyName, address, city, state, zipcode} = companyData;
@@ -65,7 +71,7 @@ const Company = ({ userData }) => {
         <div className="card-body ">
             <h5 className="card-title bold">Company Page</h5>
         </div>
-        <form onSubmit={handleAddCompany}>
+        <form onSubmit={userData.companyId ? handleUpdateCompany : handleAddCompany}>
         <ul className="list-group list-group-flush">
             <li className="list-group-item">
                 <div className="flex">

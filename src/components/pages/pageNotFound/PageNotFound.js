@@ -1,4 +1,3 @@
-import React, {useState} from 'react';
 import error from './error1.svg';
 import { useLocation } from 'react-router-dom';
 import { isAuth } from "../../auth/helpers";

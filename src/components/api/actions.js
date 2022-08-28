@@ -11,12 +11,10 @@ export const loginUser = (userData, next) => {
     // axios.post('http://localhost:8000/api/login', userData)
     axios.post(`${process.env.REACT_APP_API}/login`, userData)
     .then(response => {
-        console.log(response);
         callSuccess('User authenticated!');
         authenticate(response, next)
     })
     .catch(error => {
-        console.log('Login error: ', error);
         const msg = error.response.data.error;
         callFailure(msg)
     })
@@ -25,7 +23,6 @@ export const loginUser = (userData, next) => {
 export const registerUser = async (userData, func) => {
     axios.post(`${process.env.REACT_APP_API}/register`, userData)
     .then(response => {
-        console.log('register data: ', response)
         callSuccess("Registration Successfull");
         func();
     })
@@ -80,22 +77,42 @@ export const getCompany = async (companyId, token) => {
     }
 }
 
+
+
 export const addCompany = async (companyData, token) => {
-    axios.post({
-        method: 'POST',
-        url: `${process.env.REACT_APP_API}/companyAccount`,
-        data: companyData,
+
+  try {
+    await axios.post( `${process.env.REACT_APP_API}/companyAccount`, companyData, {
         headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
-      updateLocalStorage({company: response.data._id });
-      callSuccess('Company added')
+        updateLocalStorage({company: response.data._id });
+        callSuccess('Company added')
+    })
+  } catch (error) {
+    const msg = error.response.data.error;
+    callFailure(msg)
+  }
+}
+
+
+export const updateCompany = async (companyId, companyData, token) => {
+    await axios({
+        method: 'PATCH',
+        url: `${process.env.REACT_APP_API}/companyAccount/${companyId}`,
+        data: companyData,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    })
+    .then(response => {
+        callSuccess('Update success!')
     })
     .catch(error => {
-        console.log('comp add error: ', error)
-        const msg = error.response.data.error
+        const msg = error.response.data.error;
         callFailure(msg)
     })
+
 }
 
 export const deleteUser = async (userId, token, func) => {
@@ -120,3 +137,5 @@ export const deleteUser = async (userId, token, func) => {
         callFailure('Error while deleting')
     })
 }
+
+

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import './_profile.scss'
+import { ToastContainer } from 'react-toastify';
 import avatar from './profile1.jpg'
 import { avatars } from "./data/images";
 import EditUserModal from "./EditUserModal";
@@ -50,7 +51,17 @@ const Profile = () => {
 
     return (
         <div className="profile">
-            
+             <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
             <div className="row">
              {/* TODO: USER  */}
             <div className="col-sm-6">
