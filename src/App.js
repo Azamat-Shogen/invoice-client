@@ -10,6 +10,7 @@ import Profile from './components/pages/profile/Profile';
 import Register from './components/pages/register/Register';
 import PageNotFound from './components/pages/pageNotFound/PageNotFound';
 import Users from './components/pages/users/Users';
+import Footer from './components/footer/Footer';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           } />   
         <Route path="*" element={<PageNotFound />} />   
       </Routes>
+      <Footer />
       </AuthProvider>
     </div>
   );

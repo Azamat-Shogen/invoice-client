@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import './_profile.scss'
 import { ToastContainer } from 'react-toastify';
-import avatar from './profile1.jpg'
 import { avatars } from "./data/images";
 import EditUserModal from "./EditUserModal";
-import { getCookie } from "../../auth/helpers";
 import { isAuth } from "../../auth/helpers";
 import Company from "./Company";
 
@@ -12,8 +10,10 @@ import Company from "./Company";
 
 const Profile = () => {
     const auth = isAuth();
-    const token = getCookie('token');
+    const [open, setOpen] = useState(false);
     const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
     const [userData, setUserData] = useState({
         _id: "",
         name: "",
@@ -38,6 +38,7 @@ const Profile = () => {
         }
        
     }, []);
+
 
 
 
@@ -96,10 +97,9 @@ const Profile = () => {
                 <div className="card-body">
                 <button type="button" 
                     className="btn btn-primary" 
-                    data-toggle="modal" data-target="#exampleModal" 
-                    data-whatever="@mdo">Edit
+                    onClick={toggle}>Edit
                 </button>
-                 <EditUserModal />
+                 <EditUserModal userData={userData} modal={modal} toggle={toggle} />
                 </div>
                 </div>
                
