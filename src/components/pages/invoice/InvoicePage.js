@@ -47,7 +47,7 @@ const InvoicePage = ({ data, pdfMode }) => {
         new Date(invoice.invoiceDueDate) : new Date(invoiceDate.valueOf())
 
     if(invoice.invoiceDueDate === "") {
-        invoiceDueDate.setDate(invoiceDueDate.getDate() + 30);
+        invoiceDueDate.setDate(invoiceDueDate.getDate() + 14);
     }
 
     const hideLogo = () => {

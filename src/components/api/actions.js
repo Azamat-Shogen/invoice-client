@@ -115,6 +115,7 @@ export const updateCompany = async (companyId, companyData, token) => {
 
 }
 
+
 export const deleteUser = async (userId, token, func) => {
     await axios({
         method: 'DELETE',
@@ -134,8 +135,29 @@ export const deleteUser = async (userId, token, func) => {
     .catch(error => {
         console.log(error)
         // const msg = error.response.data.error
-        callFailure('Error while deleting')
+        callFailure('Error while deleting a user')
     })
 }
 
 
+export const updateUser = async (newUserData, token, func) => {
+    await axios({
+        method: 'PUT',
+        url: `${process.env.REACT_APP_API}/user/update`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        data: newUserData
+    })
+    .then( response => {
+        console.log('User has been updated succsessfully!')
+        console.log(response);
+        callSuccess('User has been updated succsessfully!');
+        // updateLocalStorage({})
+        func();
+    })
+    .catch(error => {
+        const msg = error.response.data.error;
+        callFailure(msg)
+    })
+}
