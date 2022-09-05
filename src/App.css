@@ -61,6 +61,17 @@ select:-webkit-autofill:focus {
 
 
 @media print {
+
+  .app {
+    max-height: 100%;
+  }
+
+  .container-wrap {
+   margin: 0;
+   padding: 0;
+
+  }
+
   .download-pdf{
     display: none;
   }
@@ -71,7 +82,10 @@ select:-webkit-autofill:focus {
     display: none;
   }
 
-  
+  .main-footer {
+    display: none!important;
+   
+  }
 
   .invoice-wrapper-main{
     max-width: 100%;

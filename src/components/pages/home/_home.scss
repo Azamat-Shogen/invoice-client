@@ -1,11 +1,6 @@
-.home{
-   
-
-}
-
 .home h6 {
     text-align: center;
-    margin: 40px 5px;
+    margin-top: 40px;
     font-family: "Brandon_blk";
     font-weight: 400;
     position: relative;
@@ -25,6 +20,7 @@
     color: rgb(254, 252, 252);
     text-shadow: 0px 2px 1.2rem #000018;
     font-size: 22px;
+    margin-top: 1rem;
 }
 
 
@@ -35,13 +31,19 @@
     outline: none;
 }
 
+.disclaimer {
+    & p {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: small;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(116, 118, 120);
+    text-shadow: 0px 2px 1.2rem #2273eb;
+    }
+}
 
-
-// .usa-map{
-//     stroke: #bb7d7d;
-//     .svg-map__location[aria-checked=true] {
-//         fill: #444af4;
-//     }
-// }
-
-
+.info {
+    padding: 1px 10px;
+    font-size: 11px;
+    margin-left: 0.5em;
+}
