@@ -24,7 +24,7 @@ const Home = () => {
 
     return (
         <div className="home">
-        <h6>Home Page. I know what you did last summer</h6>
+        <h6>Imc Permits: OS Invoice generator</h6>
         <div className="state-abbreviation"><h4>{currentState}</h4></div>
             <div className="map-container">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="192 9 1028 746" className="svg-map" aria-label="Map of USA">

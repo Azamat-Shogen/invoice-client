@@ -1,10 +1,10 @@
-
+import "./footer.scss"
 
 
 const Footer = () => {
 
     return (
-        <div>
+        <div className="main-footer">
             <h1>Im the footer</h1>
         </div>
     )
