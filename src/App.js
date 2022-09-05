@@ -19,6 +19,7 @@ function App() {
   return (
     <div className="app"> 
     <AuthProvider>
+    <div className='container-wrap'>
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -37,6 +38,7 @@ function App() {
           } />   
         <Route path="*" element={<PageNotFound />} />   
       </Routes>
+      </div>
       <Footer />
       </AuthProvider>
     </div>

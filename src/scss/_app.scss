@@ -1,14 +1,18 @@
 .app {
-    margin: 0px auto 50px auto;
+  position: relative;
+  min-height: 100vh;
+    margin: 0px auto 0px auto;
     width: 90vw;
     box-sizing: border-box;
-    height: 100vh;
     $breakpoint-tablet: 900px;
     @media (max-width: $breakpoint-tablet) {
         width: 100vw;
     }
   }
 
+  .container-wrap {
+    padding-bottom: 8.5rem;
+  }
   
   .input,
   .span,
@@ -136,6 +140,7 @@
     position: relative;
     margin: 30px auto 50px auto;
     max-width: 800px;
+    padding-bottom: 10px;
   }
   
   .image {
