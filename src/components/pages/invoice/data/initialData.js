@@ -47,7 +47,7 @@ export const initialInvoice = {
     currency: '$',
     multiplySign: 'x',
     notesLabel: 'Notes',
-    notes: 'It was great doing business with you.',
+    notes: '',
     termLabel: 'Terms & Conditions',
     term: 'Please make the payment by the due date.',
   }
