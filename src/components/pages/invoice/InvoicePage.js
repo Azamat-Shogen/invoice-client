@@ -531,6 +531,7 @@ const InvoicePage = ({ data, pdfMode }) => {
                   <EditableTextarea
                       className="w-100"
                       rows={2}
+                      placeholder="Unit/Name/Trip etc"
                       value={invoice.notes}
                       onChange={(value) => handleChange('notes', value)}
                       pdfMode={pdfMode}
