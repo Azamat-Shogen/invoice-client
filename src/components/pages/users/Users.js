@@ -1,15 +1,15 @@
 import {useState, useEffect} from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
 import { ToastContainer } from 'react-toastify';
 import { fetchAllUsers } from '../../api/actions';
 import { getCookie } from '../../auth/helpers';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { TablePagination, CircularProgress } from '@material-ui/core';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { TablePagination, CircularProgress } from '@mui/material';
 import useStyles from './usersStyles'
 import UserRow from './UserRow';
 

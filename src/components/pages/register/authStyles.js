@@ -1,5 +1,6 @@
-import { makeStyles, createTheme } from '@material-ui/core/styles';
-import {green} from '@material-ui/core/colors';
+import { createTheme } from '@mui/material/styles';
+import { makeStyles } from "@mui/styles";
+import { green } from '@mui/material/colors';
 
 export const theme = createTheme({
     root: {
@@ -77,9 +78,9 @@ export default makeStyles( theme => ({
         fontSize: "12px"
     },
 
-    [theme.breakpoints.down('sm')]:{
-        mainContainer: {
-            flexDirection: "column-reverse"
-        }
-    }
+    // [theme.breakpoints.down('sm')]:{
+    //     mainContainer: {
+    //         flexDirection: "column-reverse"
+    //     }
+    // }
 }))

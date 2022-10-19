@@ -1,7 +1,7 @@
-import Menu from '@material-ui/core/Menu';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import Menu from '@mui/material/Menu';
+import { withStyles, makeStyles } from '@mui/styles';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
 
 
@@ -12,7 +12,7 @@ export const StyledMenu = withStyles({
   })((props) => (
     <Menu
       elevation={0}
-      getContentAnchorEl={null}
+      getcontentanchorel={null}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'center',
@@ -28,8 +28,8 @@ export const StyledMenu = withStyles({
   
   export const StyledTableCell = withStyles((theme) => ({
     head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+      // backgroundColor: theme.palette.common.black,
+      // color: theme.palette.common.white,
     },
     body: {
       fontSize: 14,
@@ -38,9 +38,9 @@ export const StyledMenu = withStyles({
   
   export const StyledTableRow = withStyles((theme) => ({
     root: {
-      '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-      },
+      // '&:nth-of-type(odd)': {
+      //   backgroundColor: theme.palette.action.hover,
+      // },
     },
   }))(TableRow);
   
@@ -109,3 +109,4 @@ export const StyledMenu = withStyles({
     },
 
   }));
+

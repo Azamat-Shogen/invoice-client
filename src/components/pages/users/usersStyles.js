@@ -1,6 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
+import { makeStyles } from '@mui/styles';
+export default makeStyles((theme) => ({
     root: {
         '& > *': {
             borderBottom: 'unset',
@@ -23,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
         '& > *': {
             borderBottom: 'unset',
             padding: 13,
-            // "& .MuiCircularProgress-circle": {
-            //     color: 'blue'
-            //    }
+            "& .MuiCircularProgress-circle": {
+                color: 'blue'
+               }
         },
     },
 
@@ -101,4 +100,4 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default useStyles;
+// export default useStyles;

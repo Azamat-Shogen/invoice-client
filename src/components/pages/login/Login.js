@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import {Link, useNavigate, Navigate } from "react-router-dom";
+import { useState } from 'react';
+import {Link, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
-import {Button, CircularProgress, TextField} from '@material-ui/core';
+import {Button, TextField} from '@mui/material';
 import { isAuth } from '../../auth/helpers';
 import {
     Avatar,
@@ -10,11 +10,11 @@ import {
     Grid,
     Typography,
 
-} from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import useStyles, {theme} from './authStyles';
-import {ThemeProvider} from '@material-ui/core/styles';
-import { ToastContainer, toast } from 'react-toastify';
+import { ThemeProvider } from '@mui/styles';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../auth/auth';
 
@@ -23,10 +23,10 @@ import { useAuth } from '../../auth/auth';
 
 
 const Login = () => {
-    const [user, setUser] = useState(null)
-    const [text, setText] = useState("");
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    // const [user, setUser] = useState(null)
+    // const [text, setText] = useState("");
+    // const navigate = useNavigate();
+    // const [loading, setLoading] = useState(false);
 
     const auth = useAuth();
 

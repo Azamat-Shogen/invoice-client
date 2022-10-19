@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {Link, NavLink, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import { registerUser } from '../../api/actions';
-import {Button, CircularProgress, TextField} from '@material-ui/core';
+import {Button, CircularProgress, TextField} from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -12,10 +12,10 @@ import {
     Grid,
     Typography,
 
-} from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import useStyles, {theme} from './authStyles';
-import {ThemeProvider} from '@material-ui/core/styles';
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import useStyles, { theme } from './authStyles';
+import { ThemeProvider } from '@mui/material/styles';
 
 
 

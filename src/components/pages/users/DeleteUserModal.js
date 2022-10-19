@@ -1,4 +1,3 @@
-
 import { deleteUser } from '../../api/actions';
 import { Modal } from 'reactstrap';
 import './_users.scss';
