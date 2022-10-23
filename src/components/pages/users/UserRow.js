@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import React, { useState, useEffect } from 'react';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import { changeUserStatus } from '../../api/actions';
 import { getCookie } from '../../auth/helpers';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import Collapse from '@material-ui/core/Collapse';
-import Box from '@material-ui/core/Box';
+import IconButton from '@mui/material/IconButton';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Collapse from '@mui/material/Collapse';
+import Box from '@mui/material/Box';
 import DeleteUserModal from './DeleteUserModal';
-import {Button, Radio, RadioGroup, FormControlLabel, Grid, FormControl} from '@material-ui/core';
+import {Button, Radio, RadioGroup, FormControlLabel, Grid, FormControl} from '@mui/material';
 import useStyles from './usersStyles'
 
 
@@ -23,29 +23,31 @@ const UserRow = React.memo(({ user, setLoading }) => {
 
     
  
-    const userStatusStyle = user.status === 'Active' ? 
+const userStatusStyle = user.status === 'Active' ? 
                             classes.userStatusActive : (user.status === 'Pending' ? 
                             classes.userStatusPending: classes.userStatusRestricted)
 
-   const [userStatusClass, setUserStatusClass] = useState(userStatusStyle)
+//    const [userStatusClass, setUserStatusClass] = useState(userStatusStyle)
+const [userStatusClass, setUserStatusClass] = useState(userStatusStyle);
 
 
-
-    const handleChange = (e) => {
+    
+const handleChange = (e) => {
         const data = e.target.value
         setUserStatus(data)
     }
 
     const submitStatus = () => {
-        const tempStyle = userStatus === 'Active' ? 
-                         classes.userStatusActive : (userStatus === 'Pending' ? 
-                         classes.userStatusPending: classes.userStatusRestricted);
-
         changeUserStatus ({ 
             token: token, 
             status: userStatus, 
             userId: user._id
         });
+
+        const tempStyle = userStatus === 'Active' ? 
+        classes.userStatusActive : (userStatus === 'Pending' ? 
+        classes.userStatusPending: classes.userStatusRestricted);
+
         setUserStatusClass(tempStyle);    
     }
 
@@ -60,7 +62,7 @@ const UserRow = React.memo(({ user, setLoading }) => {
            </TableCell>
            <TableCell align='left'>{user.name}</TableCell>
            <TableCell align='center'>{user.email}</TableCell>
-           <TableCell className={userStatusClass} align='center'>{user.status}</TableCell>
+           <TableCell className={classes.userStatusActive} align='center'>{user.status}</TableCell>
 
         </TableRow>
         <TableRow className={classes.row2}>
@@ -90,7 +92,7 @@ const UserRow = React.memo(({ user, setLoading }) => {
                      style={{outline: 'none'}}
                       type='submit'
                       variant="contained"
-                      color="default"
+                      color="primary"
                       size="small"
                       disabled={user.role === 'admin'}
                         >
@@ -104,7 +106,7 @@ const UserRow = React.memo(({ user, setLoading }) => {
                         variant="contained"
                         size="small"
                         disabled={user.role === 'admin'}
-                        color="secondary"
+                        color="error"
                         onClick={toggle}
                         >
                         Delete

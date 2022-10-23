@@ -1,20 +1,16 @@
-import { useState } from "react";
-import Button from '@material-ui/core/Button';
 import { NavLink } from "react-router-dom";
-
-import Table from '@material-ui/core/Table';
+import Table from '@mui/material/Table';
 import { useAuth } from "../auth/auth";
-import TableBody from '@material-ui/core/TableBody';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import Paper from '@material-ui/core/Paper';
-import TableFooter from '@material-ui/core/TableFooter';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import Paper from '@mui/material/Paper';
+import TableFooter from '@mui/material/TableFooter';
 import { useStyles, StyledMenu, StyledTableCell, StyledTableRow } from "./drawerStyles";
-import { Link } from "@material-ui/core";
 
 
 
@@ -33,6 +29,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
     const handleRemoveIcon = (itemId) => {
       user.deleteFromCart(itemId)
     }
+
 
     return (
 

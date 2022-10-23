@@ -10,6 +10,7 @@ const Home = () => {
     const [currentState, setCurrentState] = useState("...");
     const auth = useAuth();
     const [statesFeesData, setStatesFeeData] = useState({})
+    const link_to_pdf = 'http://nationwideexpressservices.weebly.com/uploads/2/9/4/0/2940251/estimated_permit_costs.pdf';
 
     useEffect( () => {
         fetch("/statesFees.json")
@@ -37,7 +38,7 @@ const Home = () => {
             <p>depending on weight, size and route </p>
             <p>More details can be found here: 
             {statesFeesData.hasOwnProperty('states-prices') && 
-                <a href={statesFeesData['states-prices']} type="button" className="btn btn-info info">Info
+                <a href={link_to_pdf} type="button" className="btn btn-info info">Info
                 </a>
             }
             </p>

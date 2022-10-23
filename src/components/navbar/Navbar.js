@@ -1,13 +1,14 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import HomeIcon from '@material-ui/icons/Home';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import Badge from "@material-ui/core/Badge";
+import HomeIcon from '@mui/icons-material/Home';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Badge from '@mui/material/Badge';
 import { useAuth } from "../auth/auth";
 import { isAuth } from '../auth/helpers';
 import './_navbar.scss'
 import CartDrawer from "./CartDrawer";
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
+
 
 
 
