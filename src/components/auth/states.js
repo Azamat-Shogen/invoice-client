@@ -41,7 +41,7 @@ export const states = [
     },
     {
         id: 'ga',
-        convenienceFee: 6.0,
+        convenienceFee: 7.0,
         stateFee: 31.0
     },
     {
