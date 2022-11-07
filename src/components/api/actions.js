@@ -7,7 +7,7 @@ const callSuccess = (success) => toast.success(success, {theme: "colored"});
 const callFailure = (error) => toast.error(error, {theme: "colored"})
 
 
-export const loginUser = (userData, next) => {
+export const loginUser = (userData, next, onError) => {
     // axios.post('http://localhost:8000/api/login', userData)
     axios.post(`${process.env.REACT_APP_API}/login`, userData)
     .then(response => {
@@ -17,6 +17,7 @@ export const loginUser = (userData, next) => {
     .catch(error => {
         const msg = error.response.data.error;
         callFailure(msg)
+        onError();
     })
 }
 
