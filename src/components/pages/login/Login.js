@@ -3,6 +3,7 @@ import {Link, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import {Button, TextField} from '@mui/material';
 import { isAuth } from '../../auth/helpers';
+import Loader from '../../loader/Loader';
 import {
     Avatar,
     Card,
@@ -20,16 +21,14 @@ import { useAuth } from '../../auth/auth';
 
 
 
-
-
 const Login = () => {
     // const [user, setUser] = useState(null)
     // const [text, setText] = useState("");
     // const navigate = useNavigate();
     // const [loading, setLoading] = useState(false);
-
+    const [loading, setLoading] = useState(false)
     const auth = useAuth();
-
+   
     const classes = useStyles();
     const [values, setValues] = useState({
         email: "",
@@ -53,18 +52,21 @@ const Login = () => {
 
     const clickSubmit = (event) => {
         event.preventDefault();
-        
         // loginUser({email, password}, () => {
         //     setUser(isAuth())
         //     if(isAuth()){
         //         navigate('/profile')
         //     }          
         // });  
-        auth.login(email, password)
+        function onFailure(){
+            setLoading(false)
+        }
+
+        setLoading(true)
+        auth.login(email, password, onFailure)
     }
 
    
-    
   
     return (
             <Container component="main" maxWidth="xs" className={classes.container}>
@@ -136,11 +138,12 @@ const Login = () => {
                     color="primary"
                     >
                     Submit
+                   { loading && <Loader /> }
                   </Button>
 
                   <Grid container className={classes.linkContainer}>
                     <Grid item xs className={classes.link} >
-                          <Link to="#" onClick={() => alert('Please contact the administartion at: baki47hanma@gmail.com')}  >
+                          <Link to="#" onClick={() => alert('contact admin: baki47hanma@gmail.com')}  >
                               Forgot Password?
                           </Link>
                       </Grid>

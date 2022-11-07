@@ -19,14 +19,14 @@ export const AuthProvider = ({ children }) => {
     
    const navigate = useNavigate();
 
-    const login = (email, password) => {
+    const login = (email, password, onFailure) => {
         loginUser({ email, password }, () => {
             const userAuth = isAuth();
             setUser(userAuth);
             if(isAuth()){
                 navigate('/profile')
-            }
-        })
+            } 
+        }, onFailure)
        
     }
 
