@@ -6,8 +6,8 @@ export const states = [
     },
     {
         id: 'ar',
-        convenienceFee: 1.15,
-        stateFee: 20.00
+        convenienceFee: 6,
+        stateFee: 22.00
     },
     {
         id: 'az',
@@ -46,8 +46,8 @@ export const states = [
     },
     {
         id: 'id',
-        convenienceFee: 1.5,
-        stateFee: 28.0
+        convenienceFee: 2.0,
+        stateFee: 30.0
     },
     {
         id: 'il',
@@ -56,8 +56,8 @@ export const states = [
     },
     {
         id: 'in',
-        convenienceFee: 1.35,
-        stateFee: 20.0
+        convenienceFee: 1.58,
+        stateFee: 22.0
     },
     {
         id: 'ia',
