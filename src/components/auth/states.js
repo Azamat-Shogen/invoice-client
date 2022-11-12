@@ -236,7 +236,7 @@ export const states = [
     },
     {
         id: 'wy',
-        convenienceFee: 1.35,
+        convenienceFee: 2.25,
         stateFee: 25.0
     }
 
