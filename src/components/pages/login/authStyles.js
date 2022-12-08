@@ -31,7 +31,7 @@ export default makeStyles( theme => ({
         borderRadius: '5px',
         height: '100%',
         backgroundColor: "#fff",
-        boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+        boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)!important"
     },
 
     form: {
@@ -43,12 +43,12 @@ export default makeStyles( theme => ({
     header: {
         textAlign: "center",
         color: "#5982b5",
-        fontWeight: "bold",
-        fontFamily: "'Tahoma', Helvetica, sans-serif",
+        fontWeight: "bold!important",
+        fontFamily: "'Tahoma', Helvetica, sans-serif!important",
     },
 
     avatar: {
-        backgroundColor: "#cc2525",
+        backgroundColor: "#cc2525!important",
         margin: "10px auto",
 
     },
@@ -59,22 +59,22 @@ export default makeStyles( theme => ({
             color: "grey",
             fontWeight: 600,
             fontSize: 14,
-            fontFamily: "Tahoma"
+            fontFamily: "Tahoma!important"
         },
     },
 
     submit: {
-        width: "270px",
+        width: "270px!important",
         marginTop: 5
     },
 
     linkContainer: {
-        width: "270px"
+        width: "270px!important"
     },
 
     link: {
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: '10px!important',
+        marginBottom: '10px!important',
         fontSize: "12px"
     },
 
