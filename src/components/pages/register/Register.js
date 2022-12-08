@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import {Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import {Link, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import { registerUser } from '../../api/actions';
 import {Button, CircularProgress, TextField} from '@mui/material';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
     Avatar,
@@ -14,15 +14,16 @@ import {
 
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useStyles, { theme } from './authStyles';
 import { ThemeProvider } from '@mui/material/styles';
+import useStyles, { theme } from './authStyles';
+
 
 
 
 const Register = () => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false)
+    const [loading] = useState(false)
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -37,9 +38,7 @@ const Register = () => {
         },
     }
 
-    const callSuccess = (success) => toast.success(success, {theme: "colored"});
-    const callFailure = (error) => toast.error(error, {theme: "colored"})
-
+ 
     const {name, email, password, buttonText} = values;
 
     const handleChange = (name) => (event) => {

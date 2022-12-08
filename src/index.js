@@ -1,5 +1,6 @@
 
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './scss/main.scss';

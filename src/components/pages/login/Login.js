@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import {Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import {Button, TextField} from '@mui/material';
-import { isAuth } from '../../auth/helpers';
 import Loader from '../../loader/Loader';
 import {
     Avatar,
@@ -13,11 +12,12 @@ import {
 
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import useStyles, {theme} from './authStyles';
+
 import { ThemeProvider } from '@mui/styles';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../auth/auth';
+import useStyles, {theme} from './authStyles';
 
 
 
