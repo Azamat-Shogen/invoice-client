@@ -15,9 +15,19 @@ export const loginUser = (userData, next, onError) => {
         authenticate(response, next)
     })
     .catch(error => {
-        const msg = error.response.data.error;
-        callFailure(msg)
-        onError();
+        let msg;
+        try{
+          msg = error.response.data.error
+        } catch(er){
+            msg = 'server is down ..... 🤖';
+        } finally {
+            callFailure(msg);
+            onError();
+        }
+       // const msg = error.response.data.error || 'server error';
+    //    callFailure(msg)
+    //    onError();
+       
     })
 }
 
@@ -28,8 +38,16 @@ export const registerUser = async (userData, func) => {
         func();
     })
     .catch((error) => {
-        const msg = error.response.data.error
-        callFailure(msg)
+        let msg;
+        try {
+            msg = error.response.data.error;
+        } catch (er) {
+            msg = 'server is down ..... 🤖';
+        } finally{
+            callFailure(msg)
+        }
+        // const msg = error.response.data.error
+        // callFailure(msg)
     })
 }
 
