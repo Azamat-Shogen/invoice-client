@@ -2,7 +2,8 @@ import { useState } from 'react';
 import {Link, useNavigate } from "react-router-dom";
 import { validateEmail } from '../../auth/helpers';
 import { registerUser } from '../../api/actions';
-import {Button, CircularProgress, TextField} from '@mui/material';
+import {Button, TextField} from '@mui/material';
+import Loader from '../../loader/Loader';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -23,7 +24,7 @@ import useStyles, { theme } from './authStyles';
 const Register = () => {
     const classes = useStyles();
     const navigate = useNavigate();
-    const [loading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [values, setValues] = useState({
         name: "",
         email: "",
@@ -47,14 +48,25 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        registerUser({ name, email, password }, () => {
-            console.log('tesing register: ');
-            setTimeout( () => {
-                navigate('/login')
-            }, 2000)
-        })
+        setLoading(true)
 
+        //TODO: if no error: call success function
+        function onSuccses(){
+            setTimeout(() => {
+                setLoading(false);
+                navigate('/login')
+            }, 2000)        
+        }
+
+        //TODO: if no error: call error function
+        function onError(){
+            setLoading(false)
+        }
+
+        registerUser({ name, email, password }, onSuccses, onError)
     }
+
+   
   
     return (
         <Container component="main" maxWidth="xs" className={classes.container}>
@@ -140,9 +152,7 @@ const Register = () => {
                         color="primary"
                          >
                         {buttonText}
-                        {loading &&  <CircularProgress color='inherit'
-                                                       size={30} style={{padding: 5, }}
-                                                       value={5} thickness={5} /> }
+                        {loading &&  <Loader /> }
                     </Button>
                     <Grid className={classes.link} >
                               <Link to="/login"  >

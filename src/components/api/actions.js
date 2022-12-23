@@ -31,11 +31,11 @@ export const loginUser = (userData, next, onError) => {
     })
 }
 
-export const registerUser = async (userData, func) => {
+export const registerUser = async (userData, onSuccses, onError) => {
     axios.post(`${process.env.REACT_APP_API}/register`, userData)
     .then(response => {
         callSuccess("Registration Successfull");
-        func();
+        onSuccses();
     })
     .catch((error) => {
         let msg;
@@ -45,11 +45,14 @@ export const registerUser = async (userData, func) => {
             msg = 'server is down ..... 🤖';
         } finally{
             callFailure(msg)
+            onError()
         }
         // const msg = error.response.data.error
         // callFailure(msg)
     })
 }
+
+
 
 export const fetchAllUsers = async (token) => {
   
