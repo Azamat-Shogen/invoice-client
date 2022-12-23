@@ -101,14 +101,12 @@
     }
   
     a {
-      
       width: 40px;
       height: 40px;
       background: url('../images/print1.svg');
 
     }
   }
-
 
   .invoice-wrapper-main {
     position: relative;
@@ -222,4 +220,8 @@
     left: 0;
     border-radius: 4px;
     box-shadow: 2px 1px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-toggler {
+    margin-right: 0.5rem;
   }

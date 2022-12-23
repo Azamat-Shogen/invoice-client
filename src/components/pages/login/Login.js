@@ -22,10 +22,6 @@ import useStyles, {theme} from './authStyles';
 
 
 const Login = () => {
-    // const [user, setUser] = useState(null)
-    // const [text, setText] = useState("");
-    // const navigate = useNavigate();
-    // const [loading, setLoading] = useState(false);
     const [loading, setLoading] = useState(false)
     const auth = useAuth();
    
@@ -52,12 +48,6 @@ const Login = () => {
 
     const clickSubmit = (event) => {
         event.preventDefault();
-        // loginUser({email, password}, () => {
-        //     setUser(isAuth())
-        //     if(isAuth()){
-        //         navigate('/profile')
-        //     }          
-        // });  
         function onFailure(){
             setLoading(false)
         }
@@ -137,7 +127,7 @@ const Login = () => {
                     variant="contained"
                     color="primary"
                     >
-                    Submit
+                    {buttonText}
                    { loading && <Loader /> }
                   </Button>
 
