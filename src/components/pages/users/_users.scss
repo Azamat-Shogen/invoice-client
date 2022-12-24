@@ -18,3 +18,18 @@
  .users-modal-footer button {
     margin: 5px;
  }
+
+ .pending-status{
+    color: rgb(157, 152, 51)!important;
+    font-weight: bold!important;
+ }
+
+ .active-status{
+    color: rgb(41, 208, 26)!important;
+    font-weight: bold!important;
+ }
+
+ .restricted-status{
+    color: rgb(245, 59, 31)!important;
+    font-weight: bold!important;
+ }

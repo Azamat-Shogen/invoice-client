@@ -80,6 +80,7 @@ export const changeUserStatus = async ({token, status, userId}) => {
    await axios.patch(`${process.env.REACT_APP_API}/users`, body, options)
     .then(response => {
         console.log('success: ', response)
+        callSuccess('updated')
     })
     .catch(error => {
         console.log('error: ', error);
