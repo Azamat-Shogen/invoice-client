@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo, useRef } from 'react';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import { changeUserStatus } from '../../api/actions';
@@ -13,6 +13,12 @@ import {Button, Radio, RadioGroup, FormControlLabel, Grid, FormControl} from '@m
 import useStyles from './usersStyles'
 
 
+function generateStatusClass(statusValue){
+    if(!statusValue) return "";
+    return statusValue.toLowerCase().concat("-status")
+}
+
+
 const UserRow = React.memo(({ user, setLoading }) => {
     const [open, setOpen] = useState(false);
     const [userStatus, setUserStatus] = useState(user.status);
@@ -20,15 +26,7 @@ const UserRow = React.memo(({ user, setLoading }) => {
     const toggle = () => setModal(!modal);
     const token = getCookie('token');
     const classes = useStyles();
-
-    
- 
-const userStatusStyle = user.status === 'Active' ? 
-                            classes.userStatusActive : (user.status === 'Pending' ? 
-                            classes.userStatusPending: classes.userStatusRestricted)
-
-//    const [userStatusClass, setUserStatusClass] = useState(userStatusStyle)
-const [userStatusClass, setUserStatusClass] = useState(userStatusStyle);
+    const statusClass = generateStatusClass(userStatus)
 
 
     
@@ -37,18 +35,18 @@ const handleChange = (e) => {
         setUserStatus(data)
     }
 
-    const submitStatus = () => {
+    const submitStatus = (e) => {
+        e.preventDefault();
         changeUserStatus ({ 
             token: token, 
             status: userStatus, 
             userId: user._id
         });
 
-        const tempStyle = userStatus === 'Active' ? 
-        classes.userStatusActive : (userStatus === 'Pending' ? 
-        classes.userStatusPending: classes.userStatusRestricted);
-
-        setUserStatusClass(tempStyle);    
+        setTimeout(() => {
+            setOpen(!open)
+        }, 2000)
+    
     }
 
 
@@ -62,7 +60,7 @@ const handleChange = (e) => {
            </TableCell>
            <TableCell align='left'>{user.name}</TableCell>
            <TableCell align='center'>{user.email}</TableCell>
-           <TableCell className={classes.userStatusActive} align='center'>{user.status}</TableCell>
+           <TableCell className={statusClass} align='center'>{userStatus}</TableCell>
 
         </TableRow>
         <TableRow className={classes.row2}>
@@ -123,4 +121,4 @@ const handleChange = (e) => {
     )
 });
 
-export default UserRow;
+export default memo(UserRow);

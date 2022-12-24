@@ -22,10 +22,7 @@ const Users = () => {
     const [rows, setRows] = useState([])
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-
     const token = getCookie('token');
-
-
     const classes = useStyles();
 
     useEffect( () => {
@@ -52,12 +49,13 @@ const Users = () => {
     }, [loading, token, users.length])
 
 
+
     useEffect( () => {
         if(users.length > 0){
             setRows(users)
         }
 
-    }, [users, users.length])
+    }, [users.length])
 
 
     const handleChangePage = (event, newPage) => {
