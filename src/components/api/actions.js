@@ -11,6 +11,7 @@ export const loginUser = (userData, next, onError) => {
     // axios.post('http://localhost:8000/api/login', userData)
     axios.post(`${process.env.REACT_APP_API}/login`, userData)
     .then(response => {
+
         callSuccess('User authenticated!');
         authenticate(response, next)
     })
