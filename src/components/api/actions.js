@@ -5,15 +5,19 @@ import {toast} from 'react-toastify';
 
 const callSuccess = (success) => toast.success(success, {theme: "colored"});
 const callFailure = (error) => toast.error(error, {theme: "colored"})
+const callWarning = (warning) => toast.warning(warning, {theme: 'colored', autoClose: 5000,  type: toast.TYPE.INFO})
 
 
 export const loginUser = (userData, next, onError) => {
     // axios.post('http://localhost:8000/api/login', userData)
+    setTimeout(() => {
+    callWarning('Please wait while we are trying to fetch your user information. This may take a while...')
+    }, 3000)
     axios.post(`${process.env.REACT_APP_API}/login`, userData)
     .then(response => {
-
         callSuccess('User authenticated!');
         authenticate(response, next)
+        
     })
     .catch(error => {
         let msg;
@@ -25,12 +29,10 @@ export const loginUser = (userData, next, onError) => {
             callFailure(msg);
             onError();
         }
-       // const msg = error.response.data.error || 'server error';
-    //    callFailure(msg)
-    //    onError();
-       
+   
     })
 }
+
 
 export const registerUser = async (userData, onSuccses, onError) => {
     axios.post(`${process.env.REACT_APP_API}/register`, userData)
