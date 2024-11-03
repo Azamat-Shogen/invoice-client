@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     const [cart, setCart] = useState([])
     const [itemCount, setItemCount] = useState(0);
     const [total, setTotal] = useState(0.0);
-    const [serviceFee] = useState(25);
+    const [serviceFee] = useState(20);
     const [grandTotal, setGrandTotal] = useState(0)
     const [usaMap, setMap] = useState(MAP);
     
