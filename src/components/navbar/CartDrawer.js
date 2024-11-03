@@ -24,6 +24,7 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
 
     const handleAddIcon = (itemId) => {
         user.increaseStateCount(itemId)
+        
     }
 
     const handleRemoveIcon = (itemId) => {
@@ -96,7 +97,9 @@ const CartDrawer = ({anchorEl, open, onclose , items}) => {
                   </Button> */}
 
                   <NavLink className="invoiceLink" onClick={() => onclose()} type="button" 
-                   to={`${user.user.status === "Active" ? "/invoice" : "/NotFound"}`} variant="contained">Invoice
+                  //  to={`${user.user.status === "Active" ? "/invoice" : "/NotFound"}`} variant="contained">Invoice
+                   to={"/invoice"} variant="contained">Invoice
+
                    </NavLink>
 
                </StyledTableCell>
