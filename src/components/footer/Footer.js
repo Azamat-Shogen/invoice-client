@@ -7,8 +7,8 @@ const Footer = () => {
         <div className="main-footer">
            <div className="item contacts">
              <h5>Contacts :</h5>
-             <p className="p1" >Phone: <span>224-772-1279</span></p>
-             <p className="p2">Emal: <span>permits@imcpermits.com</span></p>
+             <p className="p1" >Phone: <span>(904) 712-6435</span></p>
+             <p className="p2">Emal: <span>permits@ipropermits.com</span></p>
            </div>
           
            <div className="item copyright">

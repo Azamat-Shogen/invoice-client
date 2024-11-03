@@ -34,7 +34,7 @@ const InvoicePage = ({ data, pdfMode }) => {
     const [logoVisible, setLogoVisible] = useState(true);
     const [invoice, setInvoice] = useState(data ? { ...data} : { ...invoiceData})
     const [subTotal, setSubtotal] = useState(0)
-    const [serviceFee, setServiceFee] = useState(25);
+    const [serviceFee, setServiceFee] = useState(20);
     const [serviceFeeQuantity, setServiceFeeQuantity] = useState(getTotalCount(auth.cart))
     const [serviceFeeTotal, setServiceFeeTotal] = useState(serviceFee * serviceFeeQuantity);
 

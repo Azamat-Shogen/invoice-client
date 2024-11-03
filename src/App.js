@@ -24,17 +24,17 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='login' element={<Login />} />
-        <Route path='register' element={<Register />} />
+        {/* <Route path='register' element={<Register />} />
         <Route path='profile' element={
           <RequireAuth>
             <Profile />
           </RequireAuth>
           } />
-        <Route path='users' element={<Users />}/>
+        <Route path='users' element={<Users />}/> */}
         <Route path='invoice' element={
-          <RequireAuth>
+          // <RequireAuth>
                     <Invoice />
-          </RequireAuth>
+          // </RequireAuth>
           } />   
         <Route path="*" element={<PageNotFound />} />   
       </Routes>
