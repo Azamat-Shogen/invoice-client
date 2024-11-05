@@ -177,7 +177,7 @@ export const states = [
     {
         id: 'pa',
         convenienceFee: 0.0,
-        stateFee: 39.0
+        stateFee: 44.0
     },
     {
         id: 'ri',
